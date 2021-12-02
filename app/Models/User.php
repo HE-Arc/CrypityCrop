@@ -42,7 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function vaults()
+    public function vault()
     {
         return $this->belongsToMany(Vault::class);
     }
