@@ -16,17 +16,15 @@ class TestController extends Controller
     public function index()
     {
         $folder = array(
-            //"folder" => array(
-                "credentials"=> [
-                    ["id"=> 1, "name"=> "test1", "username"=> "username 1", "email"=> "email 1", "password"=> "password 1"],
-                    ["id"=> 2, "name"=> "test2", "username"=> "username 2", "email"=> "email 2", "password"=> "password 2"],
-                    ["id"=> 3, "name"=> "test3", "username"=> "username 3", "email"=> "email 3", "password"=> "password 3"],
-                    ["id"=> 4, "name"=> "test4", "username"=> "username 4", "email"=> "email 4", "password"=> "password 4"],
-                    ["id"=> 5, "name"=> "test5", "username"=> "username 5", "email"=> "email 5", "password"=> "password 5"],
-                    ["id"=> 6, "name"=> "test6", "username"=> "username 6", "email"=> "email 6", "password"=> "password 6"],
-                    ["id"=> 7, "name"=> "test7", "username"=> "username 7", "email"=> "email 7", "password"=> "password 7"]
-                ]
-            //)
+            "credentials"=> [
+                ["id"=> 1, "name"=> "test1", "username"=> "username 1", "email"=> "email 1", "password"=> "password 1"],
+                ["id"=> 2, "name"=> "test2", "username"=> "username 2", "email"=> "email 2", "password"=> "password 2"],
+                ["id"=> 3, "name"=> "test3", "username"=> "username 3", "email"=> "email 3", "password"=> "password 3"],
+                ["id"=> 4, "name"=> "test4", "username"=> "username 4", "email"=> "email 4", "password"=> "password 4"],
+                ["id"=> 5, "name"=> "test5", "username"=> "username 5", "email"=> "email 5", "password"=> "password 5"],
+                ["id"=> 6, "name"=> "test6", "username"=> "username 6", "email"=> "email 6", "password"=> "password 6"],
+                ["id"=> 7, "name"=> "test7", "username"=> "username 7", "email"=> "email 7", "password"=> "password 7"]
+            ]
         );
 
         return inertia('Test/Index', compact('folder'));

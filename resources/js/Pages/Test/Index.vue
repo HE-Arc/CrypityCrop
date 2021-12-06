@@ -1,10 +1,9 @@
 <template>
-    <Head title="Liste des livres" />
+    <Head title="Liste des livres" /> <!-- on charge le component Head qui représente le header de notre page -->
 
-    <breeze-authenticated-layout>
+    <breeze-authenticated-layout> <!-- système qui permet d'avoir accès seuement si on est logged, sinon on nous renvoie au login -->
         <h2 class="h4 font-weight-bold">
             Liste des livres
-            {{display()}}
             <CredentialsTable :folder="folder"></CredentialsTable>
         </h2>
 
@@ -30,10 +29,7 @@ export default {
         }
     },
     methods: {
-        display() {
-            console.log("TESTs : ")
-            //console.log(folder)
-        },
+
     }
 }
 </script>
