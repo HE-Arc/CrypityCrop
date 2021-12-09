@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'username',
+        'name',
         'password',
         'email',
     ];
@@ -42,9 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function vaults()
+    public function vault()
     {
-        return $this->belongsToMany(Vault::class);
+        return $this->belongsToMany(Vault::class)->using(UserVault::class);
     }
 
     protected $table = 'users';

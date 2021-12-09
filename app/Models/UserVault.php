@@ -3,15 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserVault extends Pivot{
-
+class UserVault extends Pivot
+{
     use HasFactory;
 
-    protected $hidden = ['vault_key'];
-    protected $table = 'user_vault';
-    protected $primaryKey = 'user_vault_id';
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
 
-
+    protected $fillable = [
+        'vault_key',
+    ];
 }
