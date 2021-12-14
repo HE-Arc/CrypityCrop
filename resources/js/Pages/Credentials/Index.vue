@@ -5,6 +5,7 @@
         <h2 class="h4 font-weight-bold">
             Liste des Credentials
         </h2>
+        <tree-menu :label="folder.tree.label" :nodes="folder.tree.nodes" :depth="0"></tree-menu>
         <CredentialsTable :folder="folder"></CredentialsTable>
 
     </breeze-authenticated-layout>
@@ -13,6 +14,7 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import CredentialsTable from '@/Components/Table/CredentialsTable.vue'
+import TreeMenu from '@/Components/SideBar/TreeMenu.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 
@@ -21,6 +23,7 @@ export default {
         BreezeAuthenticatedLayout,
         Head,
         CredentialsTable,
+        TreeMenu,
     },
     props: {
         'folder': {
