@@ -3,7 +3,7 @@
 
     <breeze-authenticated-layout> <!-- système qui permet d'avoir accès seuement si on est logged, sinon on nous renvoie au login -->
         <h2 class="h4 font-weight-bold">
-            Liste des livres
+            Liste des Credentials
         </h2>
         <CredentialsTable :folder="folder"></CredentialsTable>
 

@@ -27,7 +27,7 @@ class TestController extends Controller
             ]
         );
 
-        return inertia('Test/Index', compact('folder'));
+        return inertia('Credentials/Index', compact('folder'));
         /*return view('books.index', compact('books'))
             ->with('i', (request()->input('page', 1) - 1) * 5);*/
     }

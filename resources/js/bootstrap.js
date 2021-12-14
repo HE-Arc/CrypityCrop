@@ -7,6 +7,7 @@ window._ = require('lodash');
  */
 
 import '@popperjs/core'
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const bootstrap = require('bootstrap')
 
