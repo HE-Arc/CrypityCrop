@@ -13,6 +13,8 @@ class Password extends Model
         'title','username','email','password',
     ];
 
+    protected $table = 'passwords';
+
     function vault() {
         return $this->belongsTo(Vault::class);
     }

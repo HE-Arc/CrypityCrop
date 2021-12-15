@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function vault()
     {
-        return $this->belongsToMany(Vault::class)->using(UserVault::class);
+        return $this->belongsToMany(Vault::class)->using(UsersVaults::class);
     }
 
     protected $table = 'users';
