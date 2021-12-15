@@ -26,25 +26,8 @@ class TestController extends Controller
                 ["id"=> 7, "name"=> "test7", "username"=> "username 7", "email"=> "email 7", "password"=> "password 7"]
             ],
             "tree"=> [
-                'label' => 'root',
-                'nodes' => [
-                    [
-                        'label' => 'item1',
-                        'nodes' => [
-                            [
-                                'label' => 'item1.1'
-                            ]
-                        ]
-                    ],
-                    [
-                        'label' => 'item2',
-                        'nodes' => [
-                            [
-                                'label' => 'item2.1'
-                            ]
-                        ]
-                    ]
-                ]
+                ["type"=>'vault', "label"=>"vault1", "nodes"=>[["type"=>'folder', "label"=>"folder1", "nodes"=>[["type"=>"key","label"=>"key1"], ["type"=>"key","label"=>"key1"]]], ["type"=>'folder', "label"=>"folder2", "nodes"=>[["type"=>"key","label"=>"key1"], ["type"=>"key","label"=>"key1"]]]]],
+                ["type"=>'vault', "label"=>"vault2"]
             ]
         );
 

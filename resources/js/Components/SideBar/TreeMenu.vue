@@ -1,24 +1,35 @@
 <template>
   <div class="tree-menu" :style="indent">
-    <img src="/icons/folder.png" alt="" width="20"/><span>{{ label }}</span>
-    <tree-menu
-      v-for="node in nodes"
-      v-bind:key="node"
-      :nodes="node.nodes"
-      :label="node.label"
-      :depth="depth + 1"
-    >
-    </tree-menu>
+    <details v-if="element.type == 'folder' || element.type == 'vault'">
+        <summary>
+            <element-menu :bullet="'icons/'+element.type+'.png'" :label="element.label"></element-menu>
+        </summary>
+        <tree-menu
+        v-for="node in element.nodes"
+        v-bind:key="node"
+        :element="node"
+        :depth ="1"
+        >
+        </tree-menu>
+    </details>
+    <div v-else>
+        <element-menu :bullet="'icons/'+element.type+'.png'" :label="element.label"></element-menu>
+    </div>
   </div>
 </template>
 <script>
-  export default {
-    props: [ 'label', 'nodes', 'depth' ],
-    name: 'tree-menu',
-    computed: {
-      indent() {
-        return { transform: `translate(${this.depth * 20}px)` }
-      }
+    import ElementMenu from './ElementMenu.vue'
+
+    export default {
+        components: {
+            ElementMenu,
+        },
+        props: [ 'element', 'depth'],
+        name: 'tree-menu',
+        computed: {
+            indent() {
+                return { transform: `translate(${this.depth * 20}px)` }
+            }
+        }
     }
-  }
 </script>
