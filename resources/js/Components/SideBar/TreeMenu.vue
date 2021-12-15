@@ -1,8 +1,10 @@
 <template>
   <div class="tree-menu" :style="indent">
+
     <details v-if="element.type == 'folder' || element.type == 'vault'">
         <summary>
             <element-menu :bullet="'icons/'+element.type+'.png'" :label="element.label"></element-menu>
+            <button><i class="bi bi-plus"></i></button>
         </summary>
         <tree-menu
         v-for="node in element.nodes"

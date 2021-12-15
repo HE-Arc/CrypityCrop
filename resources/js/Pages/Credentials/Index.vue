@@ -5,6 +5,7 @@
         <h2 class="h4 font-weight-bold">
             Liste des Credentials
         </h2>
+        <ElementCreationForm elementid="1"></ElementCreationForm>
         <tree-menu v-for="vault in folder.tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
         <CredentialsTable :folder="folder"></CredentialsTable>
 
@@ -17,6 +18,7 @@ import CredentialsTable from '@/Components/Table/CredentialsTable.vue'
 import TreeMenu from '@/Components/SideBar/TreeMenu.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
+import  ElementCreationForm from '@/Components/Forms/ElementCreationForm'
 
 export default {
     components: {
@@ -24,6 +26,7 @@ export default {
         Head,
         CredentialsTable,
         TreeMenu,
+        ElementCreationForm,
     },
     props: {
         'folder': {
