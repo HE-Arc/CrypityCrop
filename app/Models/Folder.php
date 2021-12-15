@@ -13,6 +13,8 @@ class Folder extends Model
         'name',
     ];
 
+    protected $table = 'folders';
+
     function vault() {
         return $this->belongsTo(Vault::class);
     }

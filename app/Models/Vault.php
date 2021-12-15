@@ -13,8 +13,10 @@ class Vault extends Model
         'name',
     ];
 
+    protected $table = 'vaults';
+
     public function user()
     {
-        return $this->belongsToMany(User::class)->using(UserVault::class);
+        return $this->belongsToMany(User::class)->using(UsersVaults::class);
     }
 }
