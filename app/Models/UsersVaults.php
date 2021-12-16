@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserVault extends Pivot
+class UsersVaults extends Pivot
 {
     use HasFactory;
 
@@ -15,6 +15,8 @@ class UserVault extends Pivot
      *
      * @var bool
      */
+    protected $table = 'usersvaults';
+
     public $incrementing = true;
 
     protected $fillable = [

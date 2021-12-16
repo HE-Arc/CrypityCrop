@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UsersVaultsController;
+use App\Http\Controllers\VaultController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\PasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,5 +34,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/test', [TestController::class, 'index'])->name('test.index');
+
+Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index');
+
+Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index');
+
+Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+
+Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index');
 
 require __DIR__.'/auth.php';
