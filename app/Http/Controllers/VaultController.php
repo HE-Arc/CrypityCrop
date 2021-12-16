@@ -17,11 +17,15 @@ class VaultController extends Controller
     {
         $vaults = Vault::all();
         //$vault = "test";
-        $vaultes = array(
-            "credentials"=> [
-                ["name"=> $vaults, "username"=> $vaults, "email"=> $vaults, "password"=> $vaults],
-            ]
-        );
+        $vaultes = null;
+        if ($vaults != null)
+        {
+            $vaultes = array(
+                "credentials"=> [
+                    ["name"=> $vaults, "username"=> $vaults, "email"=> $vaults, "password"=> $vaults],
+                ]
+            );
+        }
         
         return inertia('Vaults/Index', compact('vaultes'));
     }

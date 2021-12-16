@@ -17,11 +17,15 @@ class FolderController extends Controller
         //Showing only the top folders (not the sub-folders)
         $folder = Folder::whereNull('folder_id')->get(); //We still need to add the where on the vaults
         //$vault = "test";
-        $folders = array(
-            "credentials"=> [
-                ["name"=> $folder, "username"=> $folder, "email"=> $folder, "password"=> $folder],
-            ]
-        );
+        $folders = null;
+        if ($folder != null)
+        {
+            $folders = array(
+                "credentials"=> [
+                    ["name"=> $folder, "username"=> $folder, "email"=> $folder, "password"=> $folder],
+                ]
+            );
+        }
         
         return inertia('Folders/Index', compact('folders'));
     }
