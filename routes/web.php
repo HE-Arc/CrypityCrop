@@ -31,4 +31,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/test', [TestController::class, 'index'])->name('test.index');
 
+//Route::resource('folders', FolderController::class);
+
 require __DIR__.'/auth.php';

@@ -5,7 +5,7 @@
         <h2 class="h4 font-weight-bold">
             Liste des Credentials
         </h2>
-        <ElementCreationForm elementid="1"></ElementCreationForm>
+        <ElementCreationForm :vaultId="1" :folderId="1"></ElementCreationForm>
         <tree-menu v-for="vault in folder.tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
         <CredentialsTable :folder="folder"></CredentialsTable>
 

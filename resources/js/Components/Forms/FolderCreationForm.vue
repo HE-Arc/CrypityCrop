@@ -1,13 +1,24 @@
 <template>
     <div>
-        <form>
-            <label for="name">Name: </label><input type="text" id="name" name="name" >
+        <form @submit.prevent="form.post(route('folder.store'))">
+            <label for="name">Name: </label>
+            <input id="name" @input="name = $event.target.value" type="text" name="name" >
+            <input id="submit" type="submit" value="Submit">
         </form>
     </div>
 </template>
 <script>
-
+    import { useForm } from '@inertiajs/inertia-vue3'
     export default {
-        props: [],
+        props: ["vaultId","folderId"],
+        data() {
+            return {
+                form: useForm({
+                    name: null,
+                    vault_id: this.vaultId,
+                    folder_id: this.folderId,
+                })
+            }
+        },
     }
 </script>
