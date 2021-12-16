@@ -14,13 +14,17 @@ class UsersVaultsController extends Controller
      */
     public function index()
     {
-        $vault = UsersVaults::where('vault_id', 1)->get();
+        $vault = UsersVaults::all();
         //$vault = "test";
-        $vaults = array(
-            "credentials"=> [
-                ["name"=> $vault, "username"=> $vault, "email"=> $vault, "password"=> $vault],
-            ]
-        );
+        $vaults = null;
+        if ($vault != null)
+        {
+            $vaults = array(
+                "credentials"=> [
+                    ["name"=> $vault, "username"=> $vault, "email"=> $vault, "password"=> $vault],
+                ]
+            );
+        }
         
         return inertia('UsersVaults/Index', compact('vaults'));
     }
