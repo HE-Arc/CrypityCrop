@@ -1,5 +1,5 @@
 <template>
-    <Head title="Liste des livres" /> <!-- on charge le component Head qui représente le header de notre page -->
+    <Head title="Vaults" /> <!-- on charge le component Head qui représente le header de notre page -->
 
     <breeze-authenticated-layout> <!-- système qui permet d'avoir accès seuement si on est logged, sinon on nous renvoie au login -->
         <h2 class="h4 font-weight-bold">
