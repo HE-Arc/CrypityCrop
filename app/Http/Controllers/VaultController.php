@@ -15,19 +15,21 @@ class VaultController extends Controller
      */
     public function index()
     {
-        $vaults = Vault::all();
-        //$vault = "test";
-        $vaultes = null;
+        
+        $vaults = Vault::where('id', auth()->user()->id)->get(); //We still need to add the where on the vaults
+        $send = array("credentials"=> []);
         if ($vaults != null)
         {
-            $vaultes = array(
-                "credentials"=> [
-                    ["name"=> $vaults, "username"=> $vaults, "email"=> $vaults, "password"=> $vaults],
-                ]
-            );
+            foreach ($vaults as $vault)
+            {
+                array_push($send["credentials"],
+                    ["name"=> $vault, "username"=> 1, "email"=> 1, "password"=> 1]
+                    
+                );
+            }
         }
         
-        return inertia('Vaults/Index', compact('vaultes'));
+        return inertia('Vaults/Index', compact('send'));
     }
 
 }

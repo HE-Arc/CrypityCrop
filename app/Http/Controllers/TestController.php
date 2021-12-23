@@ -18,7 +18,7 @@ class TestController extends Controller
 
         $folder = array(
             "credentials"=> [
-                ["id"=> 1, "name"=> "test1", "username"=> "username 1", "email"=> "email 1", "password"=> "password 1"],
+                ["id"=> 1, "name"=> auth()->user()->id, "username"=> "username 1", "email"=> "email 1", "password"=> "password 1"],
                 ["id"=> 2, "name"=> "test2", "username"=> "username 2", "email"=> "email 2", "password"=> "password 2"],
                 ["id"=> 3, "name"=> "test3", "username"=> "username 3", "email"=> "email 3", "password"=> "password 3"],
                 ["id"=> 4, "name"=> "test4", "username"=> "username 4", "email"=> "email 4", "password"=> "password 4"],
