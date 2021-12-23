@@ -25,32 +25,37 @@ class TestController extends Controller
                 ["id"=> 5, "name"=> "test5", "username"=> "username 5", "email"=> "email 5", "password"=> "password 5"],
                 ["id"=> 6, "name"=> "test6", "username"=> "username 6", "email"=> "email 6", "password"=> "password 6"],
                 ["id"=> 7, "name"=> "test7", "username"=> "username 7", "email"=> "email 7", "password"=> "password 7"]
+            ],
+            "tree"=> [
+                ["type"=>'vault', "label"=>"vault1", "nodes"=>[["type"=>'folder', "label"=>"folder1", "nodes"=>[["type"=>"key","label"=>"key1"], ["type"=>"key","label"=>"key1"]]], ["type"=>'folder', "label"=>"folder2", "nodes"=>[["type"=>"key","label"=>"key1"], ["type"=>"key","label"=>"key1"]]]]],
+                ["type"=>'vault', "label"=>"vault2"]
             ]
         );
+
 
         return inertia('Credentials/Index', compact('folder'));
         /*return view('books.index', compact('books'))
             ->with('i', (request()->input('page', 1) - 1) * 5);*/
     }
 
-    public function order()
+    /*public function order()
     {
         $books = Book::with('author')->latest()->where('quantity', '<=', 0)->paginate(5);
 
         return inertia('Books/Order', compact('books'));
             //->with('i', (request()->input('page', 1) - 1) * 5);
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    /*public function create()
     {
         $authors = Author::all();
         return inertia('Books/Create', compact('authors'));
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -58,7 +63,7 @@ class TestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         $request->validate([
            'title' => 'required|min:5|max:25',
@@ -76,7 +81,7 @@ class TestController extends Controller
 
         return redirect()->route('books.index')
             ->with('success','Book created successfully.');
-    }
+    }*/
 
     /**
      * Display the specified resource.
@@ -84,11 +89,11 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    /*public function show(Book $book)
     {
         $book = Book::with('author')->where('id', $book->id)->firstOrFail();
         return inertia('Books/Show', compact('book'));
-    }
+    }*/
 
     /**
      * Show the form for editing the specified resource.
@@ -96,12 +101,12 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    /*public function edit($id)
     {
         $authors = Author::all();
         $book = Book::where('id', $id)->firstOrFail();
         return inertia('Books/Edit', ['book' => $book, 'authors' => $authors]);
-    }
+    }*/
 
     /**
      * Update the specified resource in storage.
@@ -110,7 +115,7 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    /*public function update(Request $request, Book $book)
     {
         $request->validate([
            'title' => 'required|min:5|max:25',
@@ -123,7 +128,7 @@ class TestController extends Controller
 
         return redirect()->route('books.index')
             ->with('success','Book updated successfully');
-    }
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -131,12 +136,12 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /*public function destroy($id)
     {
         $book = Book::find($id);
         $book->delete();
 
         return redirect()->route('books.index')
                         ->with('success','Book deleted successfully');
-    }
+    }*/
 }

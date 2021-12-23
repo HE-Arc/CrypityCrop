@@ -16,6 +16,7 @@ class PasswordController extends Controller
     public function index()
     {
         //Showing only the top folders (not the sub-folders)
+
         
         //$newPassword = array("title" => "HeARC", "username" => "Jean-Claude Vendame", "email" => "JeanClaude_Vendame@cdd.com", "password" => "42&ChuckNorris", "vault_id" => 1); 
         //PasswordController::insertion($newPassword);
@@ -38,7 +39,6 @@ class PasswordController extends Controller
                 );
             }
             unset($passwords["credentials"][0]);
-
         }
         
         return inertia('Passwords/Index', compact('passwords'));
