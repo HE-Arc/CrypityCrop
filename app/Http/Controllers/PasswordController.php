@@ -32,36 +32,96 @@ class PasswordController extends Controller
         $password = PasswordController::selectAllpasswordsOfUser();
         $folder = PasswordController::selectAllFoldersOfUser();
         $vault = PasswordController::selectAllVaultsOfUser();
+
+
         //$vault = "test";
-        $passwords = null; 
+
+
+        $passwords = array("credentials"=> []);
+
         if ($password != null)
         {
-            $passwords = array("credentials"=> []);
-            foreach ($password as $pass)
-            {
-                array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $pass, "username"=> 1, "email"=> 1, "password"=> 1]
-                );
-            }
+            
+            
 
+            $mapFolders = []
+            
+            //$mapFoldersFolders = []
             foreach ($folder as $fold)
             {
-                array_push($passwords["credentials"],
+                mapFolders[$fold->id] => ["data"=>$fold, "passwords"=>[], "folders"=>[]];
+                
+                //mapFoldersFolders[$fold->folder_id] => $fold
+                /*array_push($passwords["credentials"],
                     //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
                     ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
-                );
+                );*/
             }
 
+            foreach ($password as $pass)
+            {
+                assray_push(mapFolders[$pass->folder_id]['passwords'], $pass);
+                /*array_push($passwords["credentials"],
+                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
+                    ["name"=> $pass, "username"=> 1, "email"=> 1, "password"=> 1]
+                );*/
+            }
+
+            foreach ($folder as $folder)
+            {
+                if($fold->id != null)
+                {
+                    assray_push(mapFolders[$fold->folder_id]['folders'], $fold);
+                }
+                
+                //mapFoldersFolders[$fold->folder_id] => $fold
+                /*array_push($passwords["credentials"],
+                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
+                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
+                );*/
+            }
+
+            mapVaults = []
             foreach ($vault as $vaul)
             {
-                array_push($passwords["credentials"],
+                mapVaults[$vaul->id] => ["data"=>$vaul, "passwords"=>[], "folders"=>[]];
+                /*array_push($passwords["credentials"],
                     //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
                     ["name"=> $vaul, "username"=> 1, "email"=> 1, "password"=> 1]
-                );
+                );*/
             }
 
+            foreach ($folder as $folder)
+            {
+                if($fold->id == null)
+                {
+                    assray_push(mapVaults[$fold->vault_id]['folders'], $fold);
+                }
+                
+                //mapFoldersFolders[$fold->folder_id] => $fold
+                /*array_push($passwords["credentials"],
+                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
+                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
+                );*/
+            }
+            foreach ($folder as $folder)
+            {
+                if($fold->id == null)
+                {
+                    assray_push(mapVaults[$fold->vault_id]['folders'], $fold);
+                }
+                
+                //mapFoldersFolders[$fold->folder_id] => $fold
+                /*array_push($passwords["credentials"],
+                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
+                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
+                );*/
+            }
+            
 
+            
+
+            
 
         }
         
