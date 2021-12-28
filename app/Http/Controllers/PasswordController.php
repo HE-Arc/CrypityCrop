@@ -36,96 +36,66 @@ class PasswordController extends Controller
 
         //$vault = "test";
 
-
-        $passwords = array("credentials"=> []);
-
         if ($password != null)
         {
-            
-            
-
-            $mapFolders = []
+            $mapFolders = [];
             
             //$mapFoldersFolders = []
             foreach ($folder as $fold)
             {
-                mapFolders[$fold->id] => ["data"=>$fold, "passwords"=>[], "folders"=>[]];
-                
-                //mapFoldersFolders[$fold->folder_id] => $fold
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
+                $mapFolders[$fold->id] = array(
+                    "type"=>"folder",
+                    "label"=>$fold->name,
+                    "nodes"=>[]
+                );
+            }
+
+            $tree = [];
+
+            foreach ($vault as $vaul)
+            {
+                $tree[$vaul->id] = [
+                    "type"=>"vault", 
+                    "label"=>$vaul->name, 
+                    "nodes"=>[]
+                ];
             }
 
             foreach ($password as $pass)
             {
-                assray_push(mapFolders[$pass->folder_id]['passwords'], $pass);
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $pass, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
+                $p = array(
+                    "type"=>"key",
+                    "label"=>$pass->name
+                );
+                if ($pass->folder_id != null)
+                {
+                    array_push($mapFolders[$pass->folder_id]['nodes'], $p);
+                }
+                else
+                {
+                    array_push($tree[$pass->vault_id]['nodes'], $p);
+                }
             }
 
-            foreach ($folder as $folder)
+            foreach ($folder as $fold)
             {
-                if($fold->id != null)
+                if($fold->folder_id != null)
                 {
-                    assray_push(mapFolders[$fold->folder_id]['folders'], $fold);
+                    array_push($mapFolders[$fold->folder_id]['nodes'], $mapFolders[$fold->id]);
                 }
-                
-                //mapFoldersFolders[$fold->folder_id] => $fold
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
             }
 
-            mapVaults = []
-            foreach ($vault as $vaul)
+            foreach ($folder as $fold)
             {
-                mapVaults[$vaul->id] => ["data"=>$vaul, "passwords"=>[], "folders"=>[]];
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $vaul, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
-            }
-
-            foreach ($folder as $folder)
-            {
-                if($fold->id == null)
+                if($fold->folder_id == null)
                 {
-                    assray_push(mapVaults[$fold->vault_id]['folders'], $fold);
+                    array_push($tree[$fold->vault_id]['nodes'], $mapFolders[$fold->id]);
                 }
-                
-                //mapFoldersFolders[$fold->folder_id] => $fold
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
-            }
-            foreach ($folder as $folder)
-            {
-                if($fold->id == null)
-                {
-                    assray_push(mapVaults[$fold->vault_id]['folders'], $fold);
-                }
-                
-                //mapFoldersFolders[$fold->folder_id] => $fold
-                /*array_push($passwords["credentials"],
-                    //["name"=> $pass->id, "username"=> $pass->username, "email"=> $pass->email, "password"=> $pass->password]
-                    ["name"=> $fold, "username"=> 1, "email"=> 1, "password"=> 1]
-                );*/
             }
             
-
-            
-
-            
-
         }
         
-        return inertia('Passwords/Index', compact('passwords'));
+        return inertia('Passwords/Index', compact('tree'));
     }
 
     public function selectWithFoldersAndPasswords()
@@ -175,7 +145,7 @@ class PasswordController extends Controller
 
     public function selectAllFoldersOfUser()
     {
-        $folders = Folder::select("*")
+        $folders = Folder::select("folders.name","folders.id","folders.vault_id","folders.folder_id")
                     ->join('usersvaults','usersvaults.vault_id','=','folders.vault_id')
                     ->join('users','usersvaults.user_id','=','users.id')
                     ->where('users.id',auth()->user()->id)

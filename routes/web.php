@@ -33,14 +33,15 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/test', [TestController::class, 'index'])->name('test.index');
+// TODO: Check what ->name('dashboard') does
+Route::get('/test', [TestController::class, 'index'])->name('test.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index');
+Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index');
+Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+Route::get('/folders', [FolderController::class, 'index'])->name('folders.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index');
+Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index')->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

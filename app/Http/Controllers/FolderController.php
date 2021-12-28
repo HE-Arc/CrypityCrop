@@ -18,11 +18,20 @@ class FolderController extends Controller
         $folder = Folder::whereNull('folder_id')->get(); //We still need to add the where on the vaults
         //$vault = "test";
         $folders = null;
+
         if ($folder != null)
         {
             $folders = array(
                 "credentials"=> [
                     ["name"=> $folder, "username"=> $folder, "email"=> $folder, "password"=> $folder],
+                ]
+            );
+        }
+        else
+        {
+            $folders = array(
+                "credentials"=> [
+                    ["name"=> "", "username"=> "", "email"=> "", "password"=> ""],
                 ]
             );
         }
