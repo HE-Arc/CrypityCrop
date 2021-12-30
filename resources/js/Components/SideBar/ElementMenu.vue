@@ -1,9 +1,9 @@
 <template>
-    <img :src="bullet" alt="" width="20"/><span>{{ label }}</span>
+    <img :src="bullet" alt="" width="20"/><span>{{ title }}</span>
 </template>
 <script>
   export default {
-    props: ['bullet', 'label'],
+    props: ['bullet', 'title'],
     name: 'element-menu',
   }
 </script>

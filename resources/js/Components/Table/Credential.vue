@@ -1,5 +1,5 @@
 <template>
-	<td>{{ data.name }}</td>
+	<td>{{ data.title }}</td>
 	<td>{{ data.username }}<button @click="copyToClipboard(data.username)" class="btn"><i class="bi bi-clipboard"></i></button></td>
 	<td>{{ data.email }}<button @click="copyToClipboard(data.email)" class="btn"><i class="bi bi-clipboard"></i></button></td>
 	<td>{{ data.password }}<button @click="copyToClipboard(data.password)" class="btn"><i class="bi bi-clipboard"></i></button></td>

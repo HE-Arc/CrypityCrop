@@ -3,7 +3,7 @@
 
     <details v-if="element.type == 'folder' || element.type == 'vault'">
         <summary>
-            <element-menu :bullet="'icons/'+element.type+'.png'" :label="element.label"></element-menu>
+            <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
             <button><i class="bi bi-plus"></i></button>
         </summary>
         <tree-menu
@@ -15,7 +15,7 @@
         </tree-menu>
     </details>
     <div v-else>
-        <element-menu :bullet="'icons/'+element.type+'.png'" :label="element.label"></element-menu>
+        <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
         <h2 class="h4 font-weight-bold">
             Liste des mots de passe
         </h2>
-        <!--<CredentialsTable :folder="passwords"></CredentialsTable>-->
+        <CredentialsTable :passwords="tree[1].nodes"></CredentialsTable>
         <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
     </breeze-authenticated-layout>
 </template>

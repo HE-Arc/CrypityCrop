@@ -10,8 +10,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="cred in folder.credentials" v-bind:key="cred">
-				<credential :data="cred"></credential>
+			<tr v-for="cred in passwords" v-bind:key="cred">
+				<credential v-if="cred.type=='password'" :data="cred"></credential>
 			</tr>
 		</tbody>
 	</table>
@@ -26,7 +26,7 @@ export default {
 	},
 
     props: {
-		folder: {
+		passwords: {
 			type: Object,
 			required: true,
 		},
@@ -35,6 +35,6 @@ export default {
 	data() {
 		return {
 		}
-	},	
+	},
 }
 </script>

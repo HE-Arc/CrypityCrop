@@ -19,91 +19,94 @@ class PasswordController extends Controller
     {
         //Showing only the top folders (not the sub-folders)
 
-        
-        //$newPassword = array("title" => "HeARC", "username" => "Jean-Claude Vendame", "email" => "JeanClaude_Vendame@cdd.com", "password" => "42&ChuckNorris", "vault_id" => 1); 
+
+        //$newPassword = array("title" => "HeARC", "username" => "Jean-Claude Vendame", "email" => "JeanClaude_Vendame@cdd.com", "password" => "42&ChuckNorris", "vault_id" => 1);
         //PasswordController::insertion($newPassword);
 
         //$value = Password::all()->last();
         //PasswordController::deletion($value->id);
 
-        PasswordController::updateSingleValue("Tania Is the best with git","password","id",1);
-        
+        //PasswordController::updateSingleValue("Tania Is the best with git","password","id",1);
+
         //$password = Password::where('id', auth()->user()->id)->get(); //We still need to add the where on the vaults
-        $password = PasswordController::selectAllpasswordsOfUser();
-        $folder = PasswordController::selectAllFoldersOfUser();
-        $vault = PasswordController::selectAllVaultsOfUser();
+        $passwords = PasswordController::selectAllpasswordsOfUser();
+        $folders = PasswordController::selectAllFoldersOfUser();
+        $vaults = PasswordController::selectAllVaultsOfUser();
 
 
         //$vault = "test";
 
-        if ($password != null)
+        if ($passwords != null)
         {
             $mapFolders = [];
-            
+
             //$mapFoldersFolders = []
-            foreach ($folder as $fold)
+            foreach ($folders as $folder)
             {
-                $mapFolders[$fold->id] = array(
-                    "type"=>"folder",
-                    "label"=>$fold->name,
+                $mapFolders[$folder->id] = array(
+                    "type" =>"folder",
+                    "title"=>$folder->name,
                     "nodes"=>[]
                 );
             }
 
             $tree = [];
 
-            foreach ($vault as $vaul)
+            foreach ($vaults as $vault)
             {
-                $tree[$vaul->id] = [
-                    "type"=>"vault", 
-                    "label"=>$vaul->name, 
+                $tree[$vault->id] = [
+                    "type" =>"vault",
+                    "title"=>$vault->name,
                     "nodes"=>[]
                 ];
             }
 
-            foreach ($password as $pass)
+            foreach ($passwords as $password)
             {
                 $p = array(
-                    "type"=>"key",
-                    "label"=>$pass->name
+                    "type" =>"password",
+                    "title"=>$password->title,
+                    "username"=>$password->username,
+                    "email"=>$password->email,
+                    "password"=>$password->password
                 );
-                if ($pass->folder_id != null)
+                if ($password->folder_id != null)
                 {
-                    array_push($mapFolders[$pass->folder_id]['nodes'], $p);
+                    array_push($mapFolders[$password->folder_id]['nodes'], $p);
                 }
                 else
                 {
-                    array_push($tree[$pass->vault_id]['nodes'], $p);
+                    array_push($tree[$password->vault_id]['nodes'], $p);
                 }
             }
 
-            foreach ($folder as $fold)
+            foreach ($folders as $folder)
             {
-                if($fold->folder_id != null)
+                if($folder->folder_id != null)
                 {
-                    array_push($mapFolders[$fold->folder_id]['nodes'], $mapFolders[$fold->id]);
+                    array_push($mapFolders[$folder->folder_id]['nodes'], $mapFolders[$folder->id]);
                 }
             }
 
-            foreach ($folder as $fold)
+            foreach ($folders as $folder)
             {
-                if($fold->folder_id == null)
+                if($folder->folder_id == null)
                 {
-                    array_push($tree[$fold->vault_id]['nodes'], $mapFolders[$fold->id]);
+                    array_push($tree[$folder->vault_id]['nodes'], $mapFolders[$folder->id]);
                 }
             }
-            
+
         }
-        
+
         return inertia('Passwords/Index', compact('tree'));
     }
 
-    public function selectWithFoldersAndPasswords()
+    public static function selectWithFoldersAndPasswords()
     {
         //$valuts = DB::table('passwords')->leftJoin('folders', 'vaults.id', '=', 'folders.vault_id')
     }
 
-    public function insertion($request)
+    public static function insertion($request)
     {
         // Validate the request...
 
@@ -118,14 +121,14 @@ class PasswordController extends Controller
         $password->save();
     }
 
-    public function deletion(int $id)
+    public static function deletion(int $id)
     {
         // Validate the request...
 
         $deletedRows = Password::where('id', $id)->delete();
     }
 
-    public function updateSingleValue(String $value,String $field,String $fieldCondition,int $condition)
+    public static function updateSingleValue(String $value,String $field,String $fieldCondition,int $condition)
     {
         // Validate the request...
 
@@ -133,9 +136,9 @@ class PasswordController extends Controller
 
     }
 
-    public function selectAllpasswordsOfUser()
+    public static function selectAllpasswordsOfUser()
     {
-        $passwords = Password::select("*")
+        $passwords = Password::select("passwords.title","passwords.id","passwords.vault_id","passwords.folder_id","passwords.username", "passwords.email", "passwords.password")
                     ->join('usersvaults','usersvaults.vault_id','=','passwords.vault_id')
                     ->join('users','usersvaults.user_id','=','users.id')
                     ->where('users.id',auth()->user()->id)
@@ -143,7 +146,7 @@ class PasswordController extends Controller
         return $passwords;
     }
 
-    public function selectAllFoldersOfUser()
+    public static function selectAllFoldersOfUser()
     {
         $folders = Folder::select("folders.name","folders.id","folders.vault_id","folders.folder_id")
                     ->join('usersvaults','usersvaults.vault_id','=','folders.vault_id')
@@ -153,9 +156,9 @@ class PasswordController extends Controller
         return $folders;
     }
 
-    public function selectAllVaultsOfUser()
+    public static function selectAllVaultsOfUser()
     {
-        $vaults = Vault::select("*")
+        $vaults = Vault::select("vaults.name","vaults.id")
                     ->join('usersvaults','usersvaults.vault_id','=','vaults.id')
                     ->join('users','usersvaults.user_id','=','users.id')
                     ->where('users.id',auth()->user()->id)
