@@ -5,8 +5,8 @@
         <h2 class="h4 font-weight-bold">
             Liste des mots de passe
         </h2>
-        <CredentialsTable :passwords="tree[1].nodes"></CredentialsTable>
-        <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
+        <!--<CredentialsTable :passwords="passwordsList"></CredentialsTable>-->
+        <tree-menu v-model:passwords="passwords" v-for="vault in tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
     </breeze-authenticated-layout>
 </template>
 
@@ -28,11 +28,15 @@ export default {
         'tree': {
             type: Object,
             required: true
+        },
+        'passwords':
+        {
+            type: Object,
         }
     },
     methods: {
 
-    }
+    },
 }
 </script>
 

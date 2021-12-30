@@ -28,7 +28,6 @@ export default {
     props: {
 		passwords: {
 			type: Object,
-			required: true,
 		},
 	},
 
