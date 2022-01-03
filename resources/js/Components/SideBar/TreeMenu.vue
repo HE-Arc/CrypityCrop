@@ -9,11 +9,10 @@
         v-for="node in element.nodes"
         v-bind:key="node"
         :element="node"
-        v-model:passwords="passwords"
+        :form=form
         >
 
         </tree-menu>
-        {{ passwords }}
     </details>
     <div v-else>
         <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
@@ -30,13 +29,12 @@
         props: {
             'element': {
                 type: Object,
-                required: true
+                required: true,
             },
-            'passwords': {
-                type: Object
-            },
+            'form': {
+                type: Object,
+            }
         },
-        emits: ['update:passwords'],
         name: 'tree-menu',
         computed: {
             indent() {
@@ -47,8 +45,9 @@
             greet: function (event) {
                 // `this` inside methods point to the Vue instance
                 // `event` is the native DOM event
-                this.$emit('update:passwords', this.element.nodes)
-                console.log(this.element.title)
+                
+                this.form.data = this.element.nodes
+                
             }
         },
     }

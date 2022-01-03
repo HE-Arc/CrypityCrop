@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class PasswordController extends Controller
 {
-        /**
+    /**
      * Displays the vaults that the user has access
      *
      * @return \Illuminate\Http\Response
@@ -156,6 +156,7 @@ class PasswordController extends Controller
         return $folders;
     }
 
+    
     public static function selectAllVaultsOfUser()
     {
         $vaults = Vault::select("vaults.name","vaults.id")

@@ -5,8 +5,8 @@
         <h2 class="h4 font-weight-bold">
             Liste des mots de passe
         </h2>
-        <!--<CredentialsTable :passwords="passwordsList"></CredentialsTable>-->
-        <tree-menu v-model:passwords="passwords" v-for="vault in tree" v-bind:key="vault" :element="vault" :depth="0"></tree-menu>
+        <CredentialsTable :passwords="formRepo.data"></CredentialsTable>
+        <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :form="formRepo"></tree-menu>
     </breeze-authenticated-layout>
 </template>
 
@@ -18,6 +18,13 @@ import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 
 export default {
+    data() {
+        return {
+            formRepo: {
+                'data': []
+            }
+        };
+    },
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -29,10 +36,6 @@ export default {
             type: Object,
             required: true
         },
-        'passwords':
-        {
-            type: Object,
-        }
     },
     methods: {
 
