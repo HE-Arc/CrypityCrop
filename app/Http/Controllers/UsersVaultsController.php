@@ -28,5 +28,17 @@ class UsersVaultsController extends Controller
         
         return inertia('UsersVaults/Index', compact('vaults'));
     }
+
+    public static function insertion($user_id,$vault_id,$vault_key)
+    {
+        // Validate the request...
+
+        $uservault = new UsersVaults;
+
+        $uservault->user_id = $user_id;
+        $uservault->vault_id = $vault_id;
+        $uservault->vault_key = $vault_key;
+        $uservault->save();
+    }
     
 }

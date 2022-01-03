@@ -40,8 +40,10 @@ Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('users
 
 Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/folders', [FolderController::class, 'index'])->name('folders.index')->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/folders', [FolderController::class, 'index'])->name('folders.index')->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index')->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('folders', FolderController::class);
 
 require __DIR__.'/auth.php';

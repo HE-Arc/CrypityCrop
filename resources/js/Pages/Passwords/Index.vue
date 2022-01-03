@@ -5,8 +5,16 @@
         <h2 class="h4 font-weight-bold">
             Liste des mots de passe
         </h2>
-        <CredentialsTable :passwords="formRepo.data"></CredentialsTable>
-        <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :form="formRepo"></tree-menu>
+        <ElementCreationForm :vaultId="formRepo.vault_id" :folderId="formRepo.folder_id"></ElementCreationForm>
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-3">
+                    <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :form="formRepo"></tree-menu>
+                </div>
+                <CredentialsTable class="col" :passwords="formRepo.data"></CredentialsTable>
+            </div>
+        </div>
     </breeze-authenticated-layout>
 </template>
 
@@ -16,12 +24,15 @@ import CredentialsTable from '@/Components/Table/CredentialsTable.vue'
 import TreeMenu from '@/Components/SideBar/TreeMenu.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
+import  ElementCreationForm from '@/Components/Forms/ElementCreationForm'
 
 export default {
     data() {
         return {
             formRepo: {
-                'data': []
+                'data': [],
+                'vault_id': 0,
+                'folder_id': 0,
             }
         };
     },
@@ -30,6 +41,7 @@ export default {
         Head,
         CredentialsTable,
         TreeMenu,
+        ElementCreationForm,
     },
     props: {
         'tree': {

@@ -1,6 +1,7 @@
 <template>
+ok
     <div>
-        <form @submit.prevent="form.post(route('folder.store'))">
+        <form @submit.prevent="form.post(route('folders.insertion'))">
             <label for="name">Name: </label>
             <input id="name" @input="name = $event.target.value" type="text" name="name" >
             <input id="submit" type="submit" value="Submit">

@@ -1,6 +1,10 @@
 <template>
+    <p> vault {{ vaultId }} </p>
+    <p> folder {{ folderId }} </p>
+    <button id="close"><i class="bi bi-x-lg"></i></button>
+    <br>
     <input type="radio" id="folder" value="folder" v-model="modelType">
-    <label for="folder">Folder</label>
+    <label for="folderId">Folder</label>
     <br>
     <input type="radio" id="key" value="key" v-model="modelType">
     <label for="key">Key</label>
@@ -20,5 +24,9 @@ import FolderCreationForm from './FolderCreationForm.vue'
         },
         props: ['vaultId', 'folderId', 'modelType'],
         emits: ['update:modelType'],
+        methods: {
+            
+        },
     }
 </script>
+ 

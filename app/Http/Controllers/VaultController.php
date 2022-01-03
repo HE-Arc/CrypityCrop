@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vault;
+use App\Models\UsersVaults;
 
 class VaultController extends Controller
 {
@@ -30,6 +31,19 @@ class VaultController extends Controller
         }
         
         return inertia('Vaults/Index', compact('send'));
+    }
+
+    public static function insertion($request)
+    {
+        // Validate the request...
+
+        $vault = new Vault;
+
+        $vault->name = $request["name"];
+        $vault->save();
+        UsersVaults::insertion(auth()->user()->id,$vault->id,"fgvbilhvgblegluivrg");
+
+        ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" !!!!
     }
 
 }

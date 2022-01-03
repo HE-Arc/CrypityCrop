@@ -1,9 +1,9 @@
 <template>
   <div class="tree-menu" :style="indent">
     <details v-if="element.type == 'folder' || element.type == 'vault'">
-        <summary>
+        <summary @click="updatePasswords">
             <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
-            <button @click="greet"><i class="bi bi-plus"></i></button>
+            <button @click="add"><i class="bi bi-plus"></i></button>
         </summary>
         <tree-menu
         v-for="node in element.nodes"
@@ -42,11 +42,24 @@
             }
         },
         methods: {
-            greet: function (event) {
+            updatePasswords: function (event) {
                 // `this` inside methods point to the Vue instance
                 // `event` is the native DOM event
                 
                 this.form.data = this.element.nodes
+                
+                
+            },
+            add: function (event){
+                if (this.element.type == "vault"){
+                    this.form.vault_id = this.element.id
+                    this.form.folder_id = 0
+                }
+                else{
+                    this.form.vault_id = this.element.vault_id
+                    this.form.folder_id = this.element.id
+                }
+                
                 
             }
         },

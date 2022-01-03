@@ -38,4 +38,19 @@ class FolderController extends Controller
         
         return inertia('Folders/Index', compact('folders'));
     }
+
+    public function insertion($request)
+    {
+        // Validate the request...
+
+        $folder = new Folder;
+
+        $folder->name = $request["name"];
+        $folder->folder_id = $request["folder_id"];
+        $folder->vault_id = $request["vault_id"];
+        $folder->save();
+
+        return redirect()->route('folders.index');
+    }
+
 }

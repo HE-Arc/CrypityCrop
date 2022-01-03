@@ -44,6 +44,8 @@ class PasswordController extends Controller
             foreach ($folders as $folder)
             {
                 $mapFolders[$folder->id] = array(
+                    "id" => $folder->id,
+                    "vault_id" => $folder->vault_id,
                     "type" =>"folder",
                     "title"=>$folder->name,
                     "nodes"=>[]
@@ -55,6 +57,7 @@ class PasswordController extends Controller
             foreach ($vaults as $vault)
             {
                 $tree[$vault->id] = [
+                    "id" => $vault->id,
                     "type" =>"vault",
                     "title"=>$vault->name,
                     "nodes"=>[]
@@ -133,7 +136,6 @@ class PasswordController extends Controller
         // Validate the request...
 
         Password::where($fieldCondition,$condition)->update([$field => $value]);
-
     }
 
     public static function selectAllpasswordsOfUser()
