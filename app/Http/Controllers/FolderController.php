@@ -39,18 +39,40 @@ class FolderController extends Controller
         return inertia('Folders/Index', compact('folders'));
     }
 
-    public function insertion($request)
+    public function store(Request $request)
     {
         // Validate the request...
 
         $folder = new Folder;
 
         $folder->name = $request["name"];
-        $folder->folder_id = $request["folder_id"];
-        $folder->vault_id = $request["vault_id"];
+        if($request["folderId"] != 0)
+        {
+            $folder->folder_id = $request["folderId"];
+        }
+        else{
+            $folder->folder_id = null;
+        }
+        
+        $folder->vault_id = $request["vaultId"];
         $folder->save();
 
-        return redirect()->route('folders.index');
+        //return inertia('Folders/Index', compact('folders'));
+        return redirect()->route('passwords.index')->with('success','folder created successfully.');
     }
 
+    public function edit($request)
+    {
+
+    }
+
+    public function update($request)
+    {
+        
+    }
+
+    public function destroy($id)
+    {
+        DB::table('folders')->where('id',$id)->delete();
+    }
 }

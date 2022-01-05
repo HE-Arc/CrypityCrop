@@ -33,7 +33,7 @@ class VaultController extends Controller
         return inertia('Vaults/Index', compact('send'));
     }
 
-    public static function insertion($request)
+    public static function store($request)
     {
         // Validate the request...
 
@@ -41,9 +41,15 @@ class VaultController extends Controller
 
         $vault->name = $request["name"];
         $vault->save();
-        UsersVaults::insertion(auth()->user()->id,$vault->id,"fgvbilhvgblegluivrg");
+        UsersVaults::store(auth()->user()->id,$vault->id,"fgvbilhvgblegluivrg");
 
         ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" !!!!
+    }
+
+    public function destroy($id)
+    {
+        $deletedRows = Vault::where('id', $id)->delete();
+        return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
     }
 
 }

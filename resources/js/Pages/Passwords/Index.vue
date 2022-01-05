@@ -15,6 +15,7 @@
                 <CredentialsTable class="col" :passwords="formRepo.data"></CredentialsTable>
             </div>
         </div>
+        <!--{{ tree }}-->
     </breeze-authenticated-layout>
 </template>
 

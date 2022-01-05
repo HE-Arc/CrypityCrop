@@ -1,17 +1,19 @@
 <template>
+    <p>vault:{{ form.vaultId }}</p>
+    <p>folder:{{ form.folderId }}</p>
     <div>
-        <form @submit.prevent="form.post(route('key.store'))">
-            <label for="name">Name: </label>
-            <input type="text" id="name" name="name" @input="name = $event.target.value" >
+        <form @submit.prevent="form.post(route('passwords.store'))">
+            <label for="title">Name: </label>
+            <input type="text" id="title" name="title" @input="form.title = $event.target.value" >
             <br>
             <label for="username">Username: </label>
-            <input type="text" id="username" name="username" @input="username = $event.target.value">
+            <input type="text" id="username" name="username" @input="form.username = $event.target.value">
             <br>
             <label for="email">Email: </label>
-            <input type="text" id="email" name="email" @input="email = $event.target.value">
+            <input type="text" id="email" name="email" @input="form.email = $event.target.value">
             <br>
             <label for="password">Password: </label>
-            <input type='password' id="password" name="password" @input="password = $event.target.value">
+            <input type='password' id="password" name="password" @input="form.password = $event.target.value">
             <input id="submit" type="submit" value="Submit">
         </form>
     </div>
@@ -23,14 +25,24 @@
         data() {
             return {
                 form: useForm({
-                    name: null,
+                    title: null,
                     username: null,
                     email: null,
                     password: null,
-                    vault_id: this.vaultId,
-                    folder_id: this.folderId,
+                    vaultId: this.vaultId,
+                    folderId: this.folderId,
                 })
             }
         },
+        watch: { 
+            vaultId: function(newVal, oldVal) {
+                console.log("vault")
+                this.form.vaultId = newVal
+            },
+            folderId: function(newVal, oldVal) {
+                console.log("folder")
+                this.form.folderId = newVal
+            }
+        }
     }
 </script>

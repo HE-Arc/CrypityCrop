@@ -67,6 +67,7 @@ class PasswordController extends Controller
             foreach ($passwords as $password)
             {
                 $p = array(
+                    "id" => $password->id,
                     "type" =>"password",
                     "title"=>$password->title,
                     "username"=>$password->username,
@@ -109,7 +110,7 @@ class PasswordController extends Controller
         //$valuts = DB::table('passwords')->leftJoin('folders', 'vaults.id', '=', 'folders.vault_id')
     }
 
-    public static function insertion($request)
+    public function store(Request $request)
     {
         // Validate the request...
 
@@ -119,16 +120,26 @@ class PasswordController extends Controller
         $password->username = $request["username"];
         $password->email = $request["email"];
         $password->password = $request["password"];
-        $password->vault_id = $request["vault_id"];
+        $password->vault_id = $request["vaultId"];
+        if($request["folderId"] != 0)
+        {
+            $password->folder_id = $request["folderId"];
+        }
+        else{
+            $password->folder_id = null;
+        }
 
         $password->save();
+        return redirect()->route('passwords.index')->with('success','password created successfully.');
     }
 
-    public static function deletion(int $id)
+    public function destroy($id)
     {
         // Validate the request...
 
         $deletedRows = Password::where('id', $id)->delete();
+        //DB::table('passwords')->where('id', $id)->delete();
+        return redirect()->route('passwords.index')->with('success','password deleted successfully.');
     }
 
     public static function updateSingleValue(String $value,String $field,String $fieldCondition,int $condition)
@@ -154,6 +165,7 @@ class PasswordController extends Controller
                     ->join('usersvaults','usersvaults.vault_id','=','folders.vault_id')
                     ->join('users','usersvaults.user_id','=','users.id')
                     ->where('users.id',auth()->user()->id)
+                    ->orderbydesc('folder_id')
                     ->get();
         return $folders;
     }

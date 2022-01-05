@@ -44,6 +44,8 @@ Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index')->
 
 Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('folders', FolderController::class);
+Route::resource('/folders', FolderController::class)->middleware(['auth', 'verified']);
+Route::resource('/passwords', PasswordController::class)->middleware(['auth', 'verified']);
+//Route::post('/folders/insertion/{}')
 
 require __DIR__.'/auth.php';

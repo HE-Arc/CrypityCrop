@@ -1,9 +1,10 @@
 <template>
-ok
+    <p>vault:{{ form.vaultId }}</p>
+    <p>folder:{{ form.folderId }}</p>
     <div>
-        <form @submit.prevent="form.post(route('folders.insertion'))">
+        <form @submit.prevent="form.post(route('folders.store'))">
             <label for="name">Name: </label>
-            <input id="name" @input="name = $event.target.value" type="text" name="name" >
+            <input id="name" @input="form.name = $event.target.value" type="text" name="name" >
             <input id="submit" type="submit" value="Submit">
         </form>
     </div>
@@ -16,10 +17,20 @@ ok
             return {
                 form: useForm({
                     name: null,
-                    vault_id: this.vaultId,
-                    folder_id: this.folderId,
+                    vaultId: this.vaultId,
+                    folderId: this.folderId,
                 })
             }
         },
+        watch: { 
+            vaultId: function(newVal, oldVal) {
+                console.log("vault")
+                this.form.vaultId = newVal
+            },
+            folderId: function(newVal, oldVal) {
+                console.log("folder")
+                this.form.folderId = newVal
+            }
+        }
     }
 </script>

@@ -12,6 +12,7 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
 
 export default {
     components: {
@@ -27,7 +28,7 @@ export default {
 	methods: {
 		destroy(id) {
 			console.log(id)
-            //Inertia.delete(route("credential.destroy", id));
+            Inertia.delete(route("passwords.destroy", id));
         },
 		copyToClipboard(textToCopy) {
 			navigator.clipboard.writeText(textToCopy)

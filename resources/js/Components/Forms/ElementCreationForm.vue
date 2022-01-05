@@ -1,6 +1,5 @@
 <template>
-    <p> vault {{ vaultId }} </p>
-    <p> folder {{ folderId }} </p>
+   
     <button id="close"><i class="bi bi-x-lg"></i></button>
     <br>
     <input type="radio" id="folder" value="folder" v-model="modelType">
