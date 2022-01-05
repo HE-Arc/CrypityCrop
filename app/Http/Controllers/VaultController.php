@@ -41,9 +41,9 @@ class VaultController extends Controller
 
         $vault->name = $request["name"];
         $vault->save();
-        UsersVaults::store(auth()->user()->id,$vault->id,"fgvbilhvgblegluivrg");
-
-        ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" !!!!
+        
+        ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" AVEC UNE MASTERKEY !!!!
+        UsersVaults::store(auth()->user()->id,$vault->id,$request["masterKey"]);
     }
 
     public function destroy($id)

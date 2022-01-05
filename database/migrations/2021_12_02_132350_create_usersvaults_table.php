@@ -15,8 +15,8 @@ class CreateUsersvaultsTable extends Migration
     {
         Schema::create('usersvaults', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vault_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('vault_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('vault_key');
             $table->timestamps();
         });
