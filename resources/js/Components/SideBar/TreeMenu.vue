@@ -59,6 +59,7 @@
                     this.form.vault_id = this.element.vault_id
                     this.form.folder_id = this.element.id
                 }
+                this.form.creation_modal_displayed = true
                 
                 
             }

@@ -5,7 +5,12 @@
         <h2 class="h4 font-weight-bold">
             Liste des mots de passe
         </h2>
-        <ElementCreationForm :vaultId="formRepo.vault_id" :folderId="formRepo.folder_id"></ElementCreationForm>
+        <Modal :param="formRepo">
+            <div>
+                <ElementCreationForm :vaultId="formRepo.vault_id" :folderId="formRepo.folder_id"></ElementCreationForm>
+            </div>
+        </Modal>
+        
         <div class="container">
             
             <div class="row">
@@ -26,6 +31,8 @@ import TreeMenu from '@/Components/SideBar/TreeMenu.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 import  ElementCreationForm from '@/Components/Forms/ElementCreationForm'
+import Button from '@/Components/Button.vue'
+import Modal from '@/Components/Modal/Modal.vue'
 
 export default {
     data() {
@@ -34,6 +41,7 @@ export default {
                 'data': [],
                 'vault_id': 0,
                 'folder_id': 0,
+                'creation_modal_displayed': false,
             }
         };
     },
@@ -43,6 +51,8 @@ export default {
         CredentialsTable,
         TreeMenu,
         ElementCreationForm,
+        Button,
+        Modal,
     },
     props: {
         'tree': {
@@ -51,7 +61,6 @@ export default {
         },
     },
     methods: {
-
     },
 }
 </script>
