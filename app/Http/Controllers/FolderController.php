@@ -61,14 +61,14 @@ class FolderController extends Controller
         return redirect()->route('passwords.index')->with('success','folder created successfully.');
     }
 
-    public function edit($request)
-    {
-
-    }
-
     public function update($request)
     {
-        
+        //Only the name can be updated.
+        $folderToUpdate = Folder::find($request->id);
+        $folderToUpdate->name = $request["name"];
+
+        $folderToUpdate->save();
+        return redirect()->route('passwords.index')->with('success','Folder updated successfully.');
     }
 
     public function destroy($id)

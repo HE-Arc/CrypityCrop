@@ -105,11 +105,6 @@ class PasswordController extends Controller
         return inertia('Passwords/Index', compact('tree'));
     }
 
-    public static function selectWithFoldersAndPasswords()
-    {
-        //$valuts = DB::table('passwords')->leftJoin('folders', 'vaults.id', '=', 'folders.vault_id')
-    }
-
     public function store(Request $request)
     {
         // Validate the request...
@@ -142,11 +137,17 @@ class PasswordController extends Controller
         return redirect()->route('passwords.index')->with('success','password deleted successfully.');
     }
 
-    public static function updateSingleValue(String $value,String $field,String $fieldCondition,int $condition)
+    public function update($request)
     {
-        // Validate the request...
+        //Only the name can be updated.
+        $passwordToUpdate = Password::find($request->id);
+        $passwordToUpdate->title = $request["title"];
+        $passwordToUpdate->username = $request["username"];
+        $passwordToUpdate->email = $request["email"];
+        $passwordToUpdate->password = $request["password"];
 
-        Password::where($fieldCondition,$condition)->update([$field => $value]);
+        $passwordToUpdate->save();
+        return redirect()->route('passwords.index')->with('success','Password updated successfully.');
     }
 
     public static function selectAllpasswordsOfUser()
@@ -180,7 +181,4 @@ class PasswordController extends Controller
                     ->get();
         return $vaults;
     }
-
-
-
 }

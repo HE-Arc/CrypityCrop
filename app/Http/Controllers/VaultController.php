@@ -52,4 +52,15 @@ class VaultController extends Controller
         return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
     }
 
+    public function update($request)
+    {
+        //Only the name can be updated.
+        $vaultToUpdate = Vault::find($request->id);
+        $vaultToUpdate->name = $request["name"];
+
+        $vaultToUpdate->save();
+        return redirect()->route('passwords.index')->with('success','Vault updated successfully.');
+        
+    }
+
 }
