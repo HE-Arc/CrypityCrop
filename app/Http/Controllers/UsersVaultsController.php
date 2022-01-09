@@ -29,7 +29,7 @@ class UsersVaultsController extends Controller
         return inertia('UsersVaults/Index', compact('vaults'));
     }
 
-    public static function store($user_id,$vault_id,$vault_key)
+    public function store($user_id,$vault_id,$vault_key)
     {
         // Validate the request...
 

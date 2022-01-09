@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vault;
 use App\Models\UsersVaults;
+use App\Http\Controllers\UsersVaultsController;
 
 class VaultController extends Controller
 {
@@ -33,7 +34,7 @@ class VaultController extends Controller
         return inertia('Vaults/Index', compact('send'));
     }
 
-    public static function store($request)
+    public function store(Request $request)
     {
         // Validate the request...
 
@@ -43,7 +44,9 @@ class VaultController extends Controller
         $vault->save();
         
         ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" AVEC UNE MASTERKEY !!!!
-        UsersVaults::store(auth()->user()->id,$vault->id,$request["masterKey"]);
+        $masterKey = "ulvoerilhghvueéorghueéoragheéorgh";
+        UsersVaultsController::store(auth()->user()->id,$vault->id,$masterKey);
+        return redirect()->route('passwords.index')->with('success','Vault stored successfully.');
     }
 
     public function destroy($id)
@@ -52,15 +55,14 @@ class VaultController extends Controller
         return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
     }
 
-    public function update($request)
+    public function update(Request $request, $id)
     {
         //Only the name can be updated.
-        $vaultToUpdate = Vault::find($request->id);
-        $vaultToUpdate->name = $request["name"];
-
+        $vaultToUpdate = Vault::find($id);
+        $vaultToUpdate->name = $request['name'];
         $vaultToUpdate->save();
+
         return redirect()->route('passwords.index')->with('success','Vault updated successfully.');
-        
     }
 
 }

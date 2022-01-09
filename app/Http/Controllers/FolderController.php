@@ -61,18 +61,19 @@ class FolderController extends Controller
         return redirect()->route('passwords.index')->with('success','folder created successfully.');
     }
 
-    public function update($request)
+    public function update(Request $request, $id)
     {
         //Only the name can be updated.
-        $folderToUpdate = Folder::find($request->id);
-        $folderToUpdate->name = $request["name"];
+        $folder = Folder::find($id);
+        $folder->name = $request['name'];
+        $folder->save();
 
-        $folderToUpdate->save();
         return redirect()->route('passwords.index')->with('success','Folder updated successfully.');
     }
 
     public function destroy($id)
     {
-        DB::table('folders')->where('id',$id)->delete();
+        $deletedRows = Folder::where('id', $id)->delete();
+        return redirect()->route('passwords.index')->with('success','Folder deleted successfully.');
     }
 }

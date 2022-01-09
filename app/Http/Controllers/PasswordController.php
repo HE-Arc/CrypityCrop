@@ -137,14 +137,16 @@ class PasswordController extends Controller
         return redirect()->route('passwords.index')->with('success','password deleted successfully.');
     }
 
-    public function update($request)
+    public function update(Request $request, $id)
     {
-        //Only the name can be updated.
-        $passwordToUpdate = Password::find($request->id);
+        $passwordToUpdate = Password::find($id);
         $passwordToUpdate->title = $request["title"];
-        $passwordToUpdate->username = $request["username"];
-        $passwordToUpdate->email = $request["email"];
-        $passwordToUpdate->password = $request["password"];
+        if (isset($request["username"]))
+        {
+            $passwordToUpdate->username = $request["username"];
+            $passwordToUpdate->email = $request["email"];
+            $passwordToUpdate->password = $request["password"];
+        }
 
         $passwordToUpdate->save();
         return redirect()->route('passwords.index')->with('success','Password updated successfully.');

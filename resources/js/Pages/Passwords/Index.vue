@@ -10,17 +10,23 @@
                 <ElementCreationForm :vaultId="formRepo.vault_id" :folderId="formRepo.folder_id"></ElementCreationForm>
             </div>
         </Modal>
+
+        <Modal :param="formVault">
+            <div>
+                <VaultCreationForm></VaultCreationForm>
+            </div>
+        </Modal>
         
         <div class="container">
             
             <div class="row">
                 <div class="col-3">
                     <tree-menu v-for="vault in tree" v-bind:key="vault" :element="vault" :form="formRepo"></tree-menu>
+                    <button @click="formVault.modal_displayed = true"><img src="/icons/vault.png" width="20">+</button>
                 </div>
-                <CredentialsTable class="col" :passwords="formRepo.data"></CredentialsTable>
+                <CredentialsTable class="col" :passwords="formRepo.data.nodes"></CredentialsTable>
             </div>
         </div>
-        <!--{{ tree }}-->
     </breeze-authenticated-layout>
 </template>
 
@@ -31,6 +37,7 @@ import TreeMenu from '@/Components/SideBar/TreeMenu.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 import  ElementCreationForm from '@/Components/Forms/ElementCreationForm'
+import  VaultCreationForm from '@/Components/Forms/VaultCreationForm'
 import Button from '@/Components/Button.vue'
 import Modal from '@/Components/Modal/Modal.vue'
 
@@ -41,7 +48,10 @@ export default {
                 'data': [],
                 'vault_id': 0,
                 'folder_id': 0,
-                'creation_modal_displayed': false,
+                'modal_displayed':false,
+            },
+            formVault: {
+                'modal_displayed': false,
             }
         };
     },
@@ -51,6 +61,7 @@ export default {
         CredentialsTable,
         TreeMenu,
         ElementCreationForm,
+        VaultCreationForm,
         Button,
         Modal,
     },

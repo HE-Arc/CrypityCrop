@@ -46,6 +46,7 @@ Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.
 
 Route::resource('/folders', FolderController::class)->middleware(['auth', 'verified']);
 Route::resource('/passwords', PasswordController::class)->middleware(['auth', 'verified']);
+Route::resource('/vaults', VaultController::class)->middleware(['auth', 'verified']);
 //Route::post('/folders/insertion/{}')
 
 require __DIR__.'/auth.php';

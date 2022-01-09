@@ -2,8 +2,7 @@
   <div class="tree-menu" :style="indent">
     <details v-if="element.type == 'folder' || element.type == 'vault'">
         <summary @click="updatePasswords">
-            <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
-            <button @click="add"><i class="bi bi-plus"></i></button>
+            <element-menu :bullet="'icons/'+element.type+'.png'"  :element="element" :form="form"></element-menu>
         </summary>
         <tree-menu
         v-for="node in element.nodes"
@@ -15,7 +14,7 @@
         </tree-menu>
     </details>
     <div v-else>
-        <element-menu :bullet="'icons/'+element.type+'.png'" :title="element.title"></element-menu>
+        <element-menu :bullet="'icons/'+element.type+'.png'"  :element="element" :form="form"></element-menu>
     </div>
   </div>
 </template>
@@ -46,23 +45,9 @@
                 // `this` inside methods point to the Vue instance
                 // `event` is the native DOM event
                 
-                this.form.data = this.element.nodes
-                
+                this.form.data = this.element
                 
             },
-            add: function (event){
-                if (this.element.type == "vault"){
-                    this.form.vault_id = this.element.id
-                    this.form.folder_id = 0
-                }
-                else{
-                    this.form.vault_id = this.element.vault_id
-                    this.form.folder_id = this.element.id
-                }
-                this.form.creation_modal_displayed = true
-                
-                
-            }
         },
     }
 </script>
