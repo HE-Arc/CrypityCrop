@@ -27,6 +27,7 @@
                 <CredentialsTable class="col" :passwords="formRepo.data.nodes"></CredentialsTable>
             </div>
         </div>
+        <InvitationButton :invitations="invitations"></InvitationButton>
     </breeze-authenticated-layout>
 </template>
 
@@ -40,7 +41,7 @@ import  ElementCreationForm from '@/Components/Forms/ElementCreationForm'
 import  VaultCreationForm from '@/Components/Forms/VaultCreationForm'
 import Button from '@/Components/Button.vue'
 import Modal from '@/Components/Modal/Modal.vue'
-
+import InvitationButton from '@/Components/VaultShare/InvitationButton.vue'
 export default {
     data() {
         return {
@@ -52,7 +53,12 @@ export default {
             },
             formVault: {
                 'modal_displayed': false,
-            }
+            },
+            invitations: [
+                {'sender': "Jean-Mouloude", 'vaultName': "vault1"},
+                {'sender': "Albert Einstein", 'vaultName': "vaultAE"},
+                {'sender': "GTrux", 'vaultName': "vaultsélkj"},
+            ],
         };
     },
     components: {
@@ -64,6 +70,7 @@ export default {
         VaultCreationForm,
         Button,
         Modal,
+        InvitationButton,
     },
     props: {
         'tree': {

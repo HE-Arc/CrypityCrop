@@ -4,43 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Password;
-use App\Models\Folder;
-use App\Models\Vault;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\VaultController;
 use Illuminate\Support\Facades\DB;
 
 class PasswordController extends Controller
 {
     /**
-     * Displays the vaults that the user has access
+     * Displays the passwords,vaults & folders that the user has access to.$_FILES
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //Showing only the top folders (not the sub-folders)
-
-
-        //$newPassword = array("title" => "HeARC", "username" => "Jean-Claude Vendame", "email" => "JeanClaude_Vendame@cdd.com", "password" => "42&ChuckNorris", "vault_id" => 1);
-        //PasswordController::insertion($newPassword);
-
-        //$value = Password::all()->last();
-        //PasswordController::deletion($value->id);
-
-        //PasswordController::updateSingleValue("Tania Is the best with git","password","id",1);
-
-        //$password = Password::where('id', auth()->user()->id)->get(); //We still need to add the where on the vaults
         $passwords = PasswordController::selectAllpasswordsOfUser();
-        $folders = PasswordController::selectAllFoldersOfUser();
-        $vaults = PasswordController::selectAllVaultsOfUser();
-
-
-        //$vault = "test";
+        $folders = FolderController::selectAllFoldersOfUser();
+        $vaults = VaultController::selectAllVaultsOfUser();
 
         if ($passwords != null)
         {
             $mapFolders = [];
 
-            //$mapFoldersFolders = []
             foreach ($folders as $folder)
             {
                 $mapFolders[$folder->id] = array(
@@ -105,53 +89,81 @@ class PasswordController extends Controller
         return inertia('Passwords/Index', compact('tree'));
     }
 
+    /**
+     * Adds a password in the DB.
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        // Validate the request...
-
-        $password = new Password;
-
-        $password->title = $request["title"];
-        $password->username = $request["username"];
-        $password->email = $request["email"];
-        $password->password = $request["password"];
-        $password->vault_id = $request["vaultId"];
-        if($request["folderId"] != 0)
+        if ($request["title"] != null && $request["vaultId"] != null)
         {
-            $password->folder_id = $request["folderId"];
-        }
-        else{
-            $password->folder_id = null;
+            $password = new Password;
+
+            $password->title = $request["title"];
+
+            if (isset($request["username"]))
+                $password->username = $request["username"];
+            if (isset($request["email"]))
+                $password->email = $request["email"];
+            if (isset($request["password"]))
+                $password->password = $request["password"];
+            if (isset($request["vaultId"]))
+                $password->vault_id = $request["vaultId"];
+
+            if($request["folderId"] != 0)
+            {
+                $password->folder_id = $request["folderId"];
+            }
+            else
+            {
+                $password->folder_id = null;
+            }
+
+            $password->save();
+            return redirect()->route('passwords.index')->with('success','password created successfully.');
         }
 
-        $password->save();
-        return redirect()->route('passwords.index')->with('success','password created successfully.');
+        return redirect()->route('passwords.index')->with('error','Unable to create a password.');
+
     }
-
+    
+    /**
+     * Deletes a passwords.
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
-        // Validate the request...
-
         $deletedRows = Password::where('id', $id)->delete();
-        //DB::table('passwords')->where('id', $id)->delete();
         return redirect()->route('passwords.index')->with('success','password deleted successfully.');
     }
 
+    /**
+     * Used to update a password record.
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
-        $passwordToUpdate = Password::find($id);
-        $passwordToUpdate->title = $request["title"];
-        if (isset($request["username"]))
+        if ($request["title"] != null)
         {
-            $passwordToUpdate->username = $request["username"];
-            $passwordToUpdate->email = $request["email"];
-            $passwordToUpdate->password = $request["password"];
-        }
+            $passwordToUpdate = Password::find($id);
+            $passwordToUpdate->title = $request["title"];
+            if ($request["username"] != null)
+            {
+                $passwordToUpdate->username = $request["username"];
+                $passwordToUpdate->email = $request["email"];
+                $passwordToUpdate->password = $request["password"];
+            }
 
-        $passwordToUpdate->save();
-        return redirect()->route('passwords.index')->with('success','Password updated successfully.');
+            $passwordToUpdate->save();
+            return redirect()->route('passwords.index')->with('success','Password updated successfully.');
+        }
+        return redirect()->route('passwords.index')->with('error','Unable to update password.');
     }
 
+    /**
+     * Used to select all passwords of a user.
+     * @return \App\Models\Password;
+     */
     public static function selectAllpasswordsOfUser()
     {
         $passwords = Password::select("passwords.title","passwords.id","passwords.vault_id","passwords.folder_id","passwords.username", "passwords.email", "passwords.password")
@@ -160,27 +172,5 @@ class PasswordController extends Controller
                     ->where('users.id',auth()->user()->id)
                     ->get();
         return $passwords;
-    }
-
-    public static function selectAllFoldersOfUser()
-    {
-        $folders = Folder::select("folders.name","folders.id","folders.vault_id","folders.folder_id")
-                    ->join('usersvaults','usersvaults.vault_id','=','folders.vault_id')
-                    ->join('users','usersvaults.user_id','=','users.id')
-                    ->where('users.id',auth()->user()->id)
-                    ->orderbydesc('folder_id')
-                    ->get();
-        return $folders;
-    }
-
-    
-    public static function selectAllVaultsOfUser()
-    {
-        $vaults = Vault::select("vaults.name","vaults.id")
-                    ->join('usersvaults','usersvaults.vault_id','=','vaults.id')
-                    ->join('users','usersvaults.user_id','=','users.id')
-                    ->where('users.id',auth()->user()->id)
-                    ->get();
-        return $vaults;
     }
 }

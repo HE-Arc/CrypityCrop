@@ -8,7 +8,7 @@
             <input type="text" id="username" name="username" @input="form.username = $event.target.value">
             <br>
             <label for="email">Email: </label>
-            <input type="text" id="email" name="email" @input="form.email = $event.target.value">
+            <input type="email" id="email" name="email" @input="form.email = $event.target.value">
             <br>
             <label for="password">Password: </label>
             <input type='password' id="password" name="password" @input="form.password = $event.target.value">

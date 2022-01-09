@@ -9,10 +9,16 @@
         </form>
 		<form v-else-if="element.type == 'password'" v-show="modify" @submit.prevent="formPassword.put(route('passwords.update', {id: element.id})); modify=!modify">
             <input id="title" @input="formPassword.title = $event.target.value" :value="element.title" type="text" name="title" >
-        </form>
-		<i v-if="element.type == 'folder' || element.type == 'vault'" @click="add" class="bi bi-plus"></i>
-		<i @click="modify = !modify" class="bi bi-pencil-fill"></i>
-		<i @click="remove" class="bi bi-trash-fill"></i>
+        x</form>
+		<span class="btn-options">
+			<i v-if="element.type == 'folder' || element.type == 'vault'" @click="add" class="bi bi-plus"></i>
+			<i @click.prevent="modify = !modify" class="bi bi-pencil-fill"></i>
+			<i @click.prevent="remove" class="bi bi-trash-fill"></i>
+			<i @click.prevent="share_email_displayed = !share_email_displayed" v-if="element.type == 'vault'" class="bi bi-share-fill"></i>
+		</span>
+		<form v-show="share_email_displayed" @submit.prevent="formShare.post(route('usersvaults.shareVaultWithEmail'))">
+			<input id="email" @input="formShare.email = $event.target.value" placeholder="Email" type="email" name="email" >
+		</form>
     </span>
 </template>
 <script>
@@ -32,6 +38,10 @@ export default {
 		'modify': {
 			type: Boolean,
 			default: false,
+		},
+		'share_email_displayed': {
+			type: Boolean,
+			default: false,
 		}
 	},
 	data() {
@@ -41,6 +51,10 @@ export default {
 			}),
 			formPassword: useForm({
 				title: null,
+			}),
+			formShare: useForm({
+				email: null,
+				vaultId: this.element.id,
 			}),
 		}
     },
@@ -55,13 +69,6 @@ export default {
 				this.form.folder_id = this.element.id
 			}
 			this.form.modal_displayed = true
-			event.preventDefault()
-		},
-		rename: function (event) {
-			event.preventDefault()
-			this.modify = !this.modify;
-
-			//Inertia.put(route("folders.update", {id: this.element.id}), this.formUpdate);
 		},
 		remove: function (event) {
 			switch(this.element.type)
@@ -77,27 +84,35 @@ export default {
 					Inertia.delete(route("passwords.destroy", this.element.id));
 					break;
 			}
-			
-			event.preventDefault()
 		},
+		
 	}
 }
 </script> 
 <style>
 .selected {
 	background-color: blue;
-	color: white;
+	color: #f3f4f6;
 }
-.element-menu > i {
+.element-menu > span > i {
 	margin: 3px;
+}
+.element-menu > .btn-options {
 	visibility: hidden;
 }
-.element-menu:hover > i {
+.element-menu:hover > .btn-options {
 	visibility: visible;
 }
 .element-menu > form {
 	display: inline;
 	max-width: 50px;
 	
+}
+.btn-options {
+	position: absolute;
+	left: 60%;
+	z-index:50;
+	background-color:#F3F4F6;
+	color: var(--bs-body-color);
 }
 </style>

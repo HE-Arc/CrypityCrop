@@ -11,58 +11,83 @@ class VaultController extends Controller
 {
 
     /**
-     * Displays the vaults that the user has access
+     * Displays the vaults that the user has access to. Unused fo now.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        
-        $vaults = Vault::where('id', auth()->user()->id)->get(); //We still need to add the where on the vaults
-        $send = array("credentials"=> []);
-        if ($vaults != null)
-        {
-            foreach ($vaults as $vault)
-            {
-                array_push($send["credentials"],
-                    ["name"=> $vault, "username"=> 1, "email"=> 1, "password"=> 1]
-                    
-                );
-            }
-        }
-        
-        return inertia('Vaults/Index', compact('send'));
+        //Unused
     }
 
+    /**
+     * Adds a vault in the DB.
+     * When a vault is inserted. A new user-vault relation needs also to be added.
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         // Validate the request...
+        if ($request["name"] != null)
+        {
+            $vault = new Vault;
 
-        $vault = new Vault;
+            $vault->name = $request["name"];
+            $vault->save();
+            
+            //Temporary.
+            $masterKey = "ulvoerilhghvueéorghueéoragheéorgh";
 
-        $vault->name = $request["name"];
-        $vault->save();
-        
-        ///Il faudrait lancer en même temps l'insertion dans la table "usersvaults" AVEC UNE MASTERKEY !!!!
-        $masterKey = "ulvoerilhghvueéorghueéoragheéorgh";
-        UsersVaultsController::store(auth()->user()->id,$vault->id,$masterKey);
-        return redirect()->route('passwords.index')->with('success','Vault stored successfully.');
+            UsersVaultsController::store(auth()->user()->id, $vault->id, $masterKey); 
+
+            return redirect()->route('passwords.index')->with('success','Vault stored successfully.');
+        }
+
+        return redirect()->route('passwords.index')->with('error','Unable to create a vault');
     }
 
+    /**
+     * Deletes a vault.
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $deletedRows = Vault::where('id', $id)->delete();
         return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
     }
 
+    /**
+     * Used to update a vault.
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
-        //Only the name can be updated.
-        $vaultToUpdate = Vault::find($id);
-        $vaultToUpdate->name = $request['name'];
-        $vaultToUpdate->save();
+        if ($request["name"] != null)
+        {
+            //Only the name can be updated.
+            $vaultToUpdate = Vault::find($id);
+            $vaultToUpdate->name = $request['name'];
+            $vaultToUpdate->save();
 
-        return redirect()->route('passwords.index')->with('success','Vault updated successfully.');
+            return redirect()->route('passwords.index')->with('success','Vault updated successfully.');
+        }
+
+        return redirect()->route('passwords.index')->with('success','Unable to update the vault');
+
+    }
+
+    /**
+     * Used to select all vaults of a user.
+     * @return \App\Models\Password;
+     */
+    public static function selectAllVaultsOfUser()
+    {
+        $vaults = Vault::select("vaults.name","vaults.id")
+                    ->join('usersvaults','usersvaults.vault_id','=','vaults.id')
+                    ->join('users','usersvaults.user_id','=','users.id')
+                    ->where('users.id',auth()->user()->id)
+                    ->get();
+        return $vaults;
     }
 
 }
