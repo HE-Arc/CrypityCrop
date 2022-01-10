@@ -33,14 +33,22 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/test', [TestController::class, 'index'])->name('test.index');
+Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index');
+Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index');
+//Route::get('/folders', [FolderController::class, 'index'])->name('folders.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/folders', [FolderController::class, 'index'])->name('folders.index');
+Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index')->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index');
+
+
+Route::resource('/passwords', PasswordController::class)->middleware(['auth', 'verified']);
+Route::resource('/folders', FolderController::class)->middleware(['auth', 'verified']);
+Route::resource('/vaults', VaultController::class)->middleware(['auth', 'verified']);
+Route::resource('/usersvaults', UsersVaultsController::class)->middleware(['auth', 'verified']);
+
+Route::post('/usersvaults/shareVaultWithEmail', [UsersVaultsController::class, 'shareVaultWithEmail'])->name('usersvaults.shareVaultWithEmail')->middleware(['auth', 'verified']);
+//Route::post('/folders/insertion/{}')
 
 require __DIR__.'/auth.php';
