@@ -1,5 +1,5 @@
 <template>
-  <Head title="Reset Password" />
+  <Head title="Réinitialiser le mot de passe" />
 
   <div class="card-body">
 
@@ -12,12 +12,12 @@
       </div>
 
       <div class="mb-3">
-        <breeze-label for="password" value="Password" />
+        <breeze-label for="password" value="Mot de passe" />
         <breeze-input id="password" type="password" v-model="form.password" required autocomplete="new-password" />
       </div>
 
       <div class="mb-3">
-        <breeze-label for="password_confirmation" value="Confirm Password" />
+        <breeze-label for="password_confirmation" value="Confirmer le mot de passe" />
         <breeze-input id="password_confirmation" type="password" v-model="form.password_confirmation" required autocomplete="new-password" />
       </div>
 
@@ -27,8 +27,7 @@
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            
-            Reset Password
+            Réinitialiser le mot de passe
           </breeze-button>
         </div>
       </div>

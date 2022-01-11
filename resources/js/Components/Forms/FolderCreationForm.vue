@@ -1,9 +1,9 @@
 <template>
     <div>
         <form @submit.prevent="form.post(route('folders.store'))">
-            <label for="name">Name: </label>
+            <label for="name">Nom: </label>
             <input id="name" @input="form.name = $event.target.value" type="text" name="name" required>
-            <input id="submit" type="submit" value="Submit">
+            <input id="submit" type="submit" value="Envoyer">
         </form>
     </div>
 </template>

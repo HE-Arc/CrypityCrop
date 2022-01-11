@@ -1,5 +1,5 @@
 <template>
-  <Head title="Log in" />
+  <Head title="Connexion" />
 
   <div class="card-body">
 
@@ -16,7 +16,7 @@
       </div>
 
       <div class="mb-3">
-        <breeze-label for="password" value="Password" />
+        <breeze-label for="password" value="Mot de passe" />
         <breeze-input id="password" type="password" v-model="form.password" required autocomplete="current-password" />
       </div>
 
@@ -25,7 +25,7 @@
           <breeze-checkbox id="remember_me" name="remember" v-model:checked="form.remember" />
 
           <label class="form-check-label" for="remember_me">
-            Remember Me
+            Se souvenir de moi
           </label>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="mb-0">
         <div class="d-flex justify-content-end align-items-baseline">
           <Link v-if="canResetPassword" :href="route('password.request')" class="text-muted me-3">
-            Forgot your password?
+            Mot de passe oublié ?
           </Link>
 
           <breeze-button class="ms-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
@@ -41,7 +41,7 @@
               <span class="visually-hidden">Loading...</span>
             </div>
             
-            Log in
+            Se connecter
           </breeze-button>
         </div>
       </div>

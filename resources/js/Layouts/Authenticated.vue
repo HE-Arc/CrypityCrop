@@ -16,7 +16,7 @@
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav me-auto">
             <breeze-nav-link :href="route('passwords.index')" :active="route().current('passwords.index')">
-              Passwords
+              CrypityCrop
             </breeze-nav-link>
           </ul>
 
@@ -35,7 +35,7 @@
               <template #content>
                 <!-- Authentication -->
                 <breeze-dropdown-link @click="logout" as="button">
-                  Log Out
+                  Se déconnecter
                 </breeze-dropdown-link>
               </template>
             </breeze-dropdown>

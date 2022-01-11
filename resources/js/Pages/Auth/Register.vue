@@ -1,5 +1,5 @@
 <template>
-  <Head title="Register" />
+  <Head title="Créer un compte" />
 
   <div class="card-body">
 
@@ -29,15 +29,15 @@
       <div class="mb-0">
         <div class="d-flex justify-content-end align-items-baseline">
           <Link :href="route('login')" class="text-muted me-3 text-decoration-none">
-            Already registered?
+            Vous avez déjà un compte?
           </Link>
 
           <breeze-button class="ms-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
             <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
-              <span class="visually-hidden">Loading...</span>
+              <span class="visually-hidden">Chargement...</span>
             </div>
             
-            Register
+            Créer un compte
           </breeze-button>
         </div>
       </div>

@@ -11,12 +11,12 @@
               :href="route('passwords.index')"
               class="text-muted"
             >
-              Passwords
+              Mots de passe
             </Link>
 
             <template v-else>
               <Link :href="route('login')" class="text-muted">
-                Log in
+                Se connecter
               </Link>
 
               <Link
@@ -24,7 +24,7 @@
                 :href="route('register')"
                 class="ms-4 text-muted"
               >
-                Register
+                Créer un compte
               </Link>
             </template>
           </div>

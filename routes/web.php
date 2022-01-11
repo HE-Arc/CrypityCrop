@@ -29,8 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-
-
 Route::resource('/passwords', PasswordController::class)->middleware(['auth', 'verified']);
 Route::resource('/folders', FolderController::class)->middleware(['auth', 'verified']);
 Route::resource('/vaults', VaultController::class)->middleware(['auth', 'verified']);

@@ -10,6 +10,8 @@
 
         <!-- Modal to add folder or password -->
         <Modal :param="dataTree.modalAdd">
+            <h5>Création d'un mot de passe / dossier</h5>
+            <p>Saisissez les données de l'objet que vous souahitez créer.</p>
             <div>
                 <ElementCreationForm :vaultId="dataTree.vaultId" :folderId="dataTree.folderId"></ElementCreationForm>
             </div>
@@ -17,16 +19,21 @@
 
         <!-- Modal to share Vault-->
         <Modal :param="dataTree.modalShare">
+            <h5>Partager votre coffre avec quelqu'un</h5>
+            <p>Saisissez l'adresse mail de la personne avec qui vous voulez partager votre coffre.</p>
             <div>
                 <form @submit.prevent="formShare.post(route('usersvaults.shareVaultWithEmail'))">
                     <label for="email">Email: </label>
                     <input id="email" @input="formShare.email = $event.target.value; formShare.vaultId = dataTree.vaultId" placeholder="Email" type="email" name="email" >
+                    <input type="submit"/>
 			    </form>
             </div>
         </Modal>
 
         <!-- Modal to create Vault-->
         <Modal :param="modalAddVault">
+            <h5>Création d'un nouveau coffre fort</h5>
+            <p>Saisissez un nom pour votre coffre fort.</p>
             <div>
                 <VaultCreationForm></VaultCreationForm>
             </div>
@@ -39,7 +46,7 @@
                     <!-- Create a vault tree menu for all vault in tree (recursive) -->
                     <TreeMenu v-for="vault in tree" v-bind:key="vault" :element="vault" :form="dataTree"></TreeMenu>
                     <!-- Button to add vault -->
-                    <button @click="modalAddVault.modal_displayed = true"><img src="/icons/vault.png" width="20">+</button>
+                    <button @click="modalAddVault.modal_displayed = true"><img src="/icons/vault.png" width="20"> Nouveau coffre</button>
                 </div>
                 <!-- Table of selected items -->
                 <CredentialsTable class="col" :passwords="dataTree.selectedElement.nodes"></CredentialsTable>

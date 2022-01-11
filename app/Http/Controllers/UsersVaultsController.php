@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UsersVaults;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 
 class UsersVaultsController extends Controller
 {
@@ -50,7 +51,15 @@ class UsersVaultsController extends Controller
             if ($result !== null) 
             {
                 //Temporary.
-                Self::store($result->id,$value['vaultId'],"demandfvbvhjwkuehlrgerhfejwkflwigvefv");
+                try
+                {
+                    Self::store($result->id,$value['vaultId'],"demandfvbvhjwkuehlrgerhfejwkflwigvefv");
+                }
+                catch(QueryException $e)
+                {
+
+                    return redirect()->route('passwords.index')->with('error','Unable to share vault');    
+                }
                 return redirect()->route('passwords.index')->with('success','Vault shared.');
             }
             return redirect()->route('passwords.index')->with('error','Unable to find user');

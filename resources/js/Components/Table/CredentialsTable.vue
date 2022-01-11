@@ -2,10 +2,10 @@
 	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th scope="col">Title</th>
-				<th scope="col">Username</th>
+				<th scope="col">Titre</th>
+				<th scope="col">Nom d'utilisateur</th>
 				<th scope="col">Email</th>
-				<th scope="col">Password</th>
+				<th scope="col">Mot de passe</th>
 				<th scope="col">&nbsp;</th>
 			</tr>
 		</thead>

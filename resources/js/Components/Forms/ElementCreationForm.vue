@@ -1,9 +1,9 @@
 <template>
     <input type="radio" id="folder" name="folder" value="folder" v-model="modelType">
-    <label for="folder">Folder</label>
+    <label for="folder">Dossier</label>
     <br>
     <input type="radio" id="key" name="key" value="key" v-model="modelType">
-    <label for="key">Key</label>
+    <label for="key">Mot de passe</label>
     <br>
     <KeyCreationForm v-if="modelType == 'key'" :vaultId="vaultId" :folderId="folderId"></KeyCreationForm>
     <FolderCreationForm v-else-if="modelType == 'folder'" :vaultId="vaultId" :folderId="folderId"></FolderCreationForm>
