@@ -29,18 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/usersvaults', [UsersVaultsController::class, 'index'])->name('usersvaults.index')->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index')->middleware(['auth', 'verified'])->name('dashboard');
-
-//Route::get('/folders', [FolderController::class, 'index'])->name('folders.index')->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/passwords', [PasswordController::class, 'index'])->name('passwords.index')->middleware(['auth', 'verified'])->name('dashboard');
-
 
 
 Route::resource('/passwords', PasswordController::class)->middleware(['auth', 'verified']);
@@ -49,6 +37,5 @@ Route::resource('/vaults', VaultController::class)->middleware(['auth', 'verifie
 Route::resource('/usersvaults', UsersVaultsController::class)->middleware(['auth', 'verified']);
 
 Route::post('/usersvaults/shareVaultWithEmail', [UsersVaultsController::class, 'shareVaultWithEmail'])->name('usersvaults.shareVaultWithEmail')->middleware(['auth', 'verified']);
-//Route::post('/folders/insertion/{}')
 
 require __DIR__.'/auth.php';

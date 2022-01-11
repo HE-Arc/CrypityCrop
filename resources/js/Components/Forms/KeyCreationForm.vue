@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="form.post(route('passwords.store'))">
             <label for="title">Title: </label>
-            <input type="text" id="title" name="title" @input="form.title = $event.target.value" >
+            <input type="text" id="title" name="title" required @input="form.title = $event.target.value" >
             <br>
             <label for="username">Username: </label>
             <input type="text" id="username" name="username" @input="form.username = $event.target.value">
@@ -33,12 +33,12 @@
             }
         },
         watch: { 
+            //check if vault id change and refresh (before modal, form was displayed on page)
             vaultId: function(newVal, oldVal) {
-                console.log("vault")
                 this.form.vaultId = newVal
             },
+            //check if folder id change and refresh (before modal, form was displayed on page)
             folderId: function(newVal, oldVal) {
-                console.log("folder")
                 this.form.folderId = newVal
             }
         }

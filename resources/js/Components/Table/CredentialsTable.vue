@@ -10,6 +10,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			<!-- Create a row for each password in password --> 
 			<tr v-for="cred in passwords" v-bind:key="cred">
 				<credential v-if="cred.type=='password'" :data="cred"></credential>
 			</tr>
@@ -26,7 +27,7 @@ export default {
 	},
 
     props: {
-		passwords: {
+		passwords: { // contain lis of passords
 			type: Object,
 		},
 	},

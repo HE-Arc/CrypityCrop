@@ -9,7 +9,6 @@
     <FolderCreationForm v-else-if="modelType == 'folder'" :vaultId="vaultId" :folderId="folderId"></FolderCreationForm>
 </template>
 <script>
-import Input from '../Input.vue'
 import KeyCreationForm from './KeyCreationForm.vue'
 import FolderCreationForm from './FolderCreationForm.vue'
 

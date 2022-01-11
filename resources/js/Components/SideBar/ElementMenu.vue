@@ -1,45 +1,63 @@
 <template>
-    <span :class="form.data.id == element.id && form.data.type == element.type ? 'element-menu selected' : 'element-menu'">
-		<img :src="bullet" alt="" width="20"/><span v-show="!modify">{{ element.title }}</span>
+    <span class="element-menu">
+		<img :src="bullet" alt="" width="20"/>
+
+		<!-- Title of element, disapear to be replaced by an input at modification -->
+		<span :class="form.selectedElement.id == element.id && form.selectedElement.type == element.type ? 'selected' : ''" v-show="!modify">
+			{{ element.title }}
+		</span>
+		
+		<!-- Rename folder -->
 		<form v-if="element.type == 'folder'" v-show="modify" @submit.prevent="formUpdate.put(route('folders.update', {id: element.id})); modify=!modify">
             <input id="name" @input="formUpdate.name = $event.target.value" :value="element.title" type="text" name="name" >
         </form>
+
+		<!-- Rename vault -->
 		<form v-else-if="element.type == 'vault'" v-show="modify" @submit.prevent="formUpdate.put(route('vaults.update', {id: element.id})); modify=!modify">
             <input id="name" @input="formUpdate.name = $event.target.value" :value="element.title" type="text" name="name" >
         </form>
+		
+		<!-- Rename password -->
 		<form v-else-if="element.type == 'password'" v-show="modify" @submit.prevent="formPassword.put(route('passwords.update', {id: element.id})); modify=!modify">
             <input id="title" @input="formPassword.title = $event.target.value" :value="element.title" type="text" name="title" >
-        x</form>
+        </form>
+
+		<!-- Depends od element type, display on hover--> 
 		<span class="btn-options">
-			<i v-if="element.type == 'folder' || element.type == 'vault'" @click="add" class="bi bi-plus"></i>
+			<i @click.prevent="add" v-if="element.type == 'folder' || element.type == 'vault'" class="bi bi-plus"></i>
 			<i @click.prevent="modify = !modify" class="bi bi-pencil-fill"></i>
 			<i @click.prevent="remove" class="bi bi-trash-fill"></i>
-			<i @click.prevent="share_email_displayed = !share_email_displayed" v-if="element.type == 'vault'" class="bi bi-share-fill"></i>
+			<i @click.prevent="share" v-if="element.type == 'vault'" class="bi bi-share-fill"></i>
 		</span>
-		<form v-show="share_email_displayed" @submit.prevent="formShare.post(route('usersvaults.shareVaultWithEmail'))">
-			<input id="email" @input="formShare.email = $event.target.value" placeholder="Email" type="email" name="email" >
-		</form>
+		
     </span>
+
 </template>
 <script>
 import { Inertia } from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/inertia-vue3'
+import Modal from '@/Components/Modal/Modal.vue'
+
 export default {
+	components: {
+        Modal,
+
+    },
 	props: {
-		'bullet' : {
+		bullet : {
 			type: String,
 		}, 
-		'element': {
+		element: {
 			type: Object,
 		}, 
-		'form': {
+		form: {
 			type: Object,
 		}, 
-		'modify': {
+		modify: {
 			type: Boolean,
 			default: false,
 		},
-		'share_email_displayed': {
+		share_email_displayed: {
 			type: Boolean,
 			default: false,
 		}
@@ -58,24 +76,28 @@ export default {
 			}),
 		}
     },
-    name: 'element-menu',
     methods: {
 		add: function (event) {
 			if (this.element.type == "vault") {
-				this.form.vault_id = this.element.id
-				this.form.folder_id = 0
+				this.form.vaultId = this.element.id
+				this.form.folderId = 0
 			} else {
-				this.form.vault_id = this.element.vault_id
-				this.form.folder_id = this.element.id
+				this.form.vaultId = this.element.vault_id
+				this.form.folderId = this.element.id
 			}
-			this.form.modal_displayed = true
+			this.form.modalAdd.modal_displayed = true
 		},
+
+		share: function (event) {
+			this.form.vaultId = this.element.id
+			this.form.modalShare.modal_displayed = true
+		},
+
 		remove: function (event) {
 			switch(this.element.type)
 			{
 				case "vault":
-					console.log("vault supprimer")
-					Inertia.delete(route("vaults.destroy", this.element.id));
+					Inertia.delete(route("vaults.destroy", this.element.id)); // remove only when it's last user to have this folder
 					break;
 				case "folder":
 					Inertia.delete(route("folders.destroy", this.element.id));
@@ -94,6 +116,11 @@ export default {
 	background-color: blue;
 	color: #f3f4f6;
 }
+.element-menu {
+	width: 80%;
+
+	display: inline-block;
+}
 .element-menu > span > i {
 	margin: 3px;
 }
@@ -106,12 +133,11 @@ export default {
 .element-menu > form {
 	display: inline;
 	max-width: 50px;
-	
 }
 .btn-options {
 	position: absolute;
 	left: 60%;
-	z-index:50;
+	z-index: 50;
 	background-color:#F3F4F6;
 	color: var(--bs-body-color);
 }

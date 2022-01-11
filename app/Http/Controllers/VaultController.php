@@ -52,7 +52,21 @@ class VaultController extends Controller
      */
     public function destroy($id)
     {
-        $deletedRows = Vault::where('id', $id)->delete();
+        $relations = UsersVaults::where('vault_id', $id)->get();
+
+        if(sizeof($relations) == 1)
+        {
+            $deletedRows = Vault::where('id', $id)->delete();
+        }
+        else
+        {
+            foreach ($relations as $uv) {
+                if($uv->vault_id == $id && $uv->user_id == auth()->user()->id)
+                {
+                    $uv->delete();
+                }
+            }
+        }
         return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
     }
 

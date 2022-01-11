@@ -17,11 +17,5 @@
                 })
             }
         },
-        watch: { 
-            vaultId: function(newVal, oldVal) {
-                console.log("vault")
-                this.form.vaultId = newVal
-            }
-        }
     }
 </script>

@@ -4,7 +4,7 @@
       <div class="container">
         <!-- Logo -->
         <a class="navbar-brand" href="/">
-          <Link :href="route('dashboard')">
+          <Link :href="route('passwords.index')">
             <breeze-application-logo width="36" />
           </Link>
         </a>
@@ -15,8 +15,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav me-auto">
-            <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-              Dashboard
+            <breeze-nav-link :href="route('passwords.index')" :active="route().current('passwords.index')">
+              Passwords
             </breeze-nav-link>
           </ul>
 

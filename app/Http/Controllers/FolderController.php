@@ -25,6 +25,12 @@ class FolderController extends Controller
     {
         $folder = new Folder;
 
+        /*$folder->vault_id = $request["vaultId"];
+        $folder->folder_id = $request["folderId"];
+        $folder->name = $request["name"];
+        $folder->save();*/
+
+
         if ($request["name"] != null && $request["vaultId"] != null)
         {
             $folder->name = $request["name"];

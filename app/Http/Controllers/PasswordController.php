@@ -70,7 +70,7 @@ class PasswordController extends Controller
 
             foreach ($folders as $folder)
             {
-                if($folder->folder_id != null)
+                if ($folder->folder_id != null)
                 {
                     array_push($mapFolders[$folder->folder_id]['nodes'], $mapFolders[$folder->id]);
                 }
@@ -78,7 +78,7 @@ class PasswordController extends Controller
 
             foreach ($folders as $folder)
             {
-                if($folder->folder_id == null)
+                if ($folder->folder_id == null)
                 {
                     array_push($tree[$folder->vault_id]['nodes'], $mapFolders[$folder->id]);
                 }
@@ -126,7 +126,7 @@ class PasswordController extends Controller
         return redirect()->route('passwords.index')->with('error','Unable to create a password.');
 
     }
-    
+
     /**
      * Deletes a passwords.
      * @return \Illuminate\Http\Response
