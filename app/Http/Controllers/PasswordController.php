@@ -133,8 +133,14 @@ class PasswordController extends Controller
      */
     public function destroy($id)
     {
-        $deletedRows = Password::where('id', $id)->delete();
-        return redirect()->route('passwords.index')->with('success','password deleted successfully.');
+        $retrievedPassword = PasswordController::selectAllpasswordsOfUser($id);
+
+        if (!$retrievedPassword->isEmpty()) //We can only delete a vault that is ours.
+        {
+            $deletedRows = Password::where('id', $id)->delete();
+            return redirect()->route('passwords.index')->with('success','password deleted successfully.');
+        }
+        return redirect()->route('passwords.index')->with('error',"You are not allowed to delete a password that isn't yours.");
     }
 
     /**
@@ -164,13 +170,17 @@ class PasswordController extends Controller
      * Used to select all passwords of a user.
      * @return \App\Models\Password;
      */
-    public static function selectAllpasswordsOfUser()
+    public static function selectAllpasswordsOfUser($passwordId = 0)
     {
         $passwords = Password::select("passwords.title","passwords.id","passwords.vault_id","passwords.folder_id","passwords.username", "passwords.email", "passwords.password")
                     ->join('usersvaults','usersvaults.vault_id','=','passwords.vault_id')
                     ->join('users','usersvaults.user_id','=','users.id')
-                    ->where('users.id',auth()->user()->id)
-                    ->get();
-        return $passwords;
+                    ->where('users.id',auth()->user()->id);
+        if ($passwordId !=  0)
+            $passwords = $passwords->where('passwords.id',$passwordId);
+        
+        $results = $passwords->get();
+        
+        return $results;
     }
 }

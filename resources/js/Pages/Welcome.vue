@@ -40,7 +40,7 @@
           <h1 class="display-1 d-inline">CrypityCrop</h1>
           <div class="card shadow-sm">
             <h2>Bienvenue sur CrypityCrop</h2>
-            <p>Notre nouveau gestionnaire de mot de passe est génial ! Il stocke vos mots de passe en dur dans la base données :-)</p>
+            <p>Notre nouveau gestionnaire de mot de passe est génial ! Il stocke vos mots de passe en clair dans la base données :-)</p>
             <p>Vous pouvez également partager vos mots de passes pas très sécurisés avec des amis et des collègues.</p>
           </div>
         </div>
