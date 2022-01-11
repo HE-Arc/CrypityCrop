@@ -1,9 +1,9 @@
 <template>
     <div>
         <form @submit.prevent="form.post(route('vaults.store'))">
-            <label for="name">Name: </label>
+            <label for="name">Nom: </label>
             <input id="name" @input="form.name = $event.target.value" type="text" name="name" >
-            <input id="submit" type="submit" value="Submit">
+            <input id="submit" type="submit">
         </form>
     </div>
 </template>
@@ -17,11 +17,5 @@
                 })
             }
         },
-        watch: { 
-            vaultId: function(newVal, oldVal) {
-                console.log("vault")
-                this.form.vaultId = newVal
-            }
-        }
     }
 </script>

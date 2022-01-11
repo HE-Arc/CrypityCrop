@@ -4,7 +4,7 @@
   <div class="card-body">
 
     <div class="mb-2">
-      This is a secure area of the application. Please confirm your password before continuing.
+      Vous êtes en sécurité ici. Veuillez confirmer votre mot de passe avant de continuer.
     </div>
 
     <breeze-validation-errors class="mb-2" />
@@ -18,10 +18,10 @@
       <div class="d-flex justify-content-end mt-2">
         <breeze-button class="ms-4" :class="{ 'text-white-50': form.processing }" :disabled="form.processing">
           <div v-show="form.processing" class="spinner-border spinner-border-sm" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">Chargement...</span>
           </div>
             
-          Confirm
+          Confirmer
         </breeze-button>
       </div>
     </form>

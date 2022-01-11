@@ -52,8 +52,28 @@ class VaultController extends Controller
      */
     public function destroy($id)
     {
-        $deletedRows = Vault::where('id', $id)->delete();
-        return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
+        $retrievedVault = VaultController::selectAllVaultsOfUser($id);
+
+        if (!$retrievedVault->isEmpty()) //We can only delete a vault that is ours.
+        {
+            $relations = UsersVaults::where('vault_id', $id)->get();
+
+            if (sizeof($relations) == 1) // Verifiy if other peaple have this vault
+            {
+                $deletedRows = Vault::where('id', $id)->delete();
+            }
+            else
+            {
+                foreach ($relations as $uv) {
+                    if ($uv->vault_id == $id && $uv->user_id == auth()->user()->id)
+                    {
+                        $uv->delete();
+                    }
+                }
+            }
+            return redirect()->route('passwords.index')->with('success','Vault deleted successfully.');
+        }
+        return redirect()->route('passwords.index')->with('error',"You are not allowed to delete a vault that isn't yours.");
     }
 
     /**
@@ -80,14 +100,19 @@ class VaultController extends Controller
      * Used to select all vaults of a user.
      * @return \App\Models\Password;
      */
-    public static function selectAllVaultsOfUser()
+    public static function selectAllVaultsOfUser($vaultId = 0)
     {
         $vaults = Vault::select("vaults.name","vaults.id")
                     ->join('usersvaults','usersvaults.vault_id','=','vaults.id')
                     ->join('users','usersvaults.user_id','=','users.id')
-                    ->where('users.id',auth()->user()->id)
-                    ->get();
-        return $vaults;
+                    ->where('user_id',auth()->user()->id);
+        if ($vaultId !=  0)
+            $vaults = $vaults->where('vaults.id',$vaultId);
+    
+        $results = $vaults->get();
+        
+        return $results;
+
     }
 
 }

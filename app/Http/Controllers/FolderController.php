@@ -25,6 +25,12 @@ class FolderController extends Controller
     {
         $folder = new Folder;
 
+        /*$folder->vault_id = $request["vaultId"];
+        $folder->folder_id = $request["folderId"];
+        $folder->name = $request["name"];
+        $folder->save();*/
+
+
         if ($request["name"] != null && $request["vaultId"] != null)
         {
             $folder->name = $request["name"];
@@ -70,18 +76,31 @@ class FolderController extends Controller
      */
     public function destroy($id)
     {
-        $deletedRows = Folder::where('id', $id)->delete();
-        return redirect()->route('passwords.index')->with('success','Folder deleted successfully.');
+        $retrievedFolder = FolderController::selectAllFoldersOfUser($id);
+
+        if (!$retrievedFolder->isEmpty()) //We can only delete a folder that is ours.
+        {
+            $deletedRows = Folder::where('id', $id)->delete();
+            return redirect()->route('passwords.index')->with('success','Folder deleted successfully.');
+        }
+        return redirect()->route('passwords.index')->with('error',"You are not allowed to delete a folder that isn't yours.");
     }
 
-    public static function selectAllFoldersOfUser()
+    public static function selectAllFoldersOfUser($folderId = 0)
     {
+
         $folders = Folder::select("folders.name","folders.id","folders.vault_id","folders.folder_id")
             ->join('usersvaults','usersvaults.vault_id','=','folders.vault_id')
             ->join('users','usersvaults.user_id','=','users.id')
-            ->where('users.id',auth()->user()->id)
-            ->orderbydesc('folder_id')
+            ->where('users.id',auth()->user()->id);
+        if ($folderId !=  0) 
+            $folders = $folders->where('folders.id',$folderId);
+        
+        $folders->orderbydesc('folder_id')
             ->get();
-        return $folders;
+
+        $results = $folders->get();
+    
+        return $results;
     }
 }

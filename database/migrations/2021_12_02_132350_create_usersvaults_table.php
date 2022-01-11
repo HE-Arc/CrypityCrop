@@ -17,6 +17,7 @@ class CreateUsersvaultsTable extends Migration
             $table->id();
             $table->foreignId('vault_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unique(array('vault_id', 'user_id'));
             $table->string('vault_key');
             $table->timestamps();
         });

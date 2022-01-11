@@ -1,8 +1,13 @@
 <template>
-    <div @click="param.modal_displayed = !param.modal_displayed" id="hidder" v-show="param.modal_displayed"></div>
-    <div id="modal_content"  v-show="param.modal_displayed">
-        <i @click="disable" class="bi bi-x-lg"></i>
-        <slot></slot>
+    <div>
+        <!-- Hide background, quit modal when clicked -->
+        <div @click="param.modal_displayed = !param.modal_displayed" class="hidder" v-show="param.modal_displayed"></div>
+        <!-- Modal, with quit button -->
+        <div class="modal_content"  v-show="param.modal_displayed">
+            <i @click.prevent="disable" class="bi bi-x-lg"></i>
+            <!-- Content of modal -->
+            <slot></slot>
+        </div>
     </div>
 </template>
 <script>
@@ -10,7 +15,7 @@
 
 export default {
     props: {
-        param: {
+        param: { // must have modal_displayed attribute
             type: Object,
             default: false,
         }
@@ -20,13 +25,12 @@ export default {
         disable: function(event)
         {
             this.param.modal_displayed = !this.param.modal_displayed
-            event.preventDefault()
         }
     }
 }
 </script>
-<style scoped>
-    #modal_content {
+<style>
+    .modal_content {
         color: gainsboro;
         display: block;
         position: fixed;
@@ -44,13 +48,13 @@ export default {
         z-index: 110;
         border-radius: 5px;
     }
-    #modal_content > i {
-        position: relative;
-        top: 5px;
-        right: 5px;
+    .modal_content > i {
+        position: absolute;
+        top: 7px;
+        right: 10px;
         z-index: 110;
     }
-    #hidder {
+    .hidder {
         position: fixed;
         top: 0;
         left: 0;
